@@ -85,6 +85,11 @@ export const fullMenuData = {
     { name: "RIZ BASMATI NATURE", desc: "riz basmati nature, safran", price: "4,50 €" },
     { name: "EGG FRIED RICE", desc: "riz frit aux œufs, carottes, chou", price: "8,00 €" }
   ],
+  "Lunch": [
+    { name: "LUNCH BOWL", desc: "Bowl de riz, curry maison et naan chaud", price: "12,50 €" },
+    { name: "NAAN LUNCH", desc: "Naan au poulet grillé, sauce tomate et salade", price: "10,50 €" },
+    { name: "SPECIAL LUNCH", desc: "Assiette spéciale avec tikka, riz et légumes", price: "13,50 €" }
+  ],
   "Lassi": [
     { name: "LASSI NATURE", desc: "yaourt battu nature", price: "6,00 €" },
     { name: "LASSI SALÉ", desc: "yaourt salé, cumin", price: "6,00 €" },
@@ -117,6 +122,7 @@ export const iconMap = {
   "Légumes": "fa-solid fa-leaf",
   "Biryani": "fa-solid fa-utensil-spoon",
   "Matar PillaO": "fa-solid fa-seedling",
+  "Lunch": "fa-solid fa-bowl-food",
   "Lassi": "fa-solid fa-mug-saucer",
   "Kheer": "fa-solid fa-cake-candles",
   "Halwa": "fa-solid fa-candy-cane",

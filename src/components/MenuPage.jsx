@@ -25,23 +25,41 @@ import {
   faIceCream
 } from '@fortawesome/free-solid-svg-icons';
 
-// ========== ONLINE IMAGES ==========
+// ========== LOCAL IMAGES FROM ASSETS ==========
+import raitasImg from '../assets/Raita.png';
+import samoussaImg from '../assets/Samosa.png';
+import chickenImg from '../assets/chiken.png';
+import naanImg from '../assets/naan.png';
+import beefImg from '../assets/beef.png';
+import lambImg from '../assets/lamb.png';
+import fishImg from '../assets/fish.png';
+import vegetablesImg from '../assets/vigitables.png';
+import biryaniImg from '../assets/baryani.png';
+import riceImg from '../assets/riz.png';
+import lassiImg from '../assets/lissi.png';
+import kheerImg from '../assets/kheer.png';
+import halwaImg from '../assets/halva.png';
+import mangoImg from '../assets/ango mouse.png';
+import lunchImg from '../assets/Lunch/big Bowl.png';
+
+// ========== IMAGE MAPPING ==========
 const categoryImages = {
-  "Raitas": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&h=300&fit=crop",
-  "Samoussa": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&h=300&fit=crop",
-  "Grill": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=300&h=300&fit=crop",
-  "Naan": "https://images.unsplash.com/photo-1565557623262-b5c3c3f7a9d3?w=300&h=300&fit=crop",
-  "Shai Korma": "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=300&h=300&fit=crop",
-  "Boeuf": "https://images.unsplash.com/photo-1558030006-450675393462?w=300&h=300&fit=crop",
-  "Agneau": "https://images.unsplash.com/photo-1603048297172-c9244455b9c9?w=300&h=300&fit=crop",
-  "Fish": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=300&h=300&fit=crop",
-  "Légumes": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=300&fit=crop",
-  "Biryani": "https://images.unsplash.com/photo-1563379091339-03b21bb4c89e?w=300&h=300&fit=crop",
-  "Matar PillaO": "https://images.unsplash.com/photo-1512054502232-10a0a035d672?w=300&h=300&fit=crop",
-  "Lassi": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&h=300&fit=crop",
-  "Kheer": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&h=300&fit=crop",
-  "Halwa": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=300&h=300&fit=crop",
-  "Mango Mousse": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&h=300&fit=crop"
+  "Raitas": raitasImg,
+  "Samoussa": samoussaImg,
+  "Grill": chickenImg,
+  "Naan": naanImg,
+  "Shai Korma": chickenImg,
+  "Boeuf": beefImg,
+  "Agneau": lambImg,
+  "Fish": fishImg,
+  "Légumes": vegetablesImg,
+  "Biryani": biryaniImg,
+  "Matar PillaO": riceImg,
+  "Lassi": lassiImg,
+  "Kheer": kheerImg,
+  "Halwa": halwaImg,
+  "Mango Mousse": mangoImg,
+  "Lunch": lunchImg
 };
 
 // ========== ICON MAPPING ==========
@@ -60,7 +78,8 @@ const categoryIcons = {
   "Lassi": faMugSaucer,
   "Kheer": faCakeCandles,
   "Halwa": faCandyCane,
-  "Mango Mousse": faIceCream
+  "Mango Mousse": faIceCream,
+  "Lunch": faBowlFood
 };
 
 // ========== FULL MENU DATA ==========
@@ -102,6 +121,11 @@ const fullMenuData = {
   ],
   "Matar PillaO": [
     { name: "MATAR PILLAO", desc: "riz basmati aux petits pois", price: "5,50 €" }
+  ],
+  "Lunch": [
+    { name: "LUNCH BOWL", desc: "Bowl de riz, curry maison et naan chaud", price: "12,50 €" },
+    { name: "NAAN LUNCH", desc: "Naan au poulet grillé, sauce tomate et salade", price: "10,50 €" },
+    { name: "SPECIAL LUNCH", desc: "Assiette spéciale avec tikka, riz et légumes", price: "13,50 €" }
   ],
   "Lassi": [
     { name: "LASSI NATURE", desc: "yaourt battu nature", price: "6,00 €" },
