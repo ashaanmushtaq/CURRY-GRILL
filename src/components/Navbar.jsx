@@ -9,8 +9,10 @@ const Navbar = ({ onMenuClick }) => {
     e.preventDefault();
     setActiveLink(link);
     
-    if (link === 'Menu' || link === 'Menu Midi') {
-      onMenuClick(); // Open menu page
+    if (link === 'Menu') {
+      onMenuClick('menu');
+    } else if (link === 'Menu Midi') {
+      onMenuClick('midi');
     } else {
       const section = document.getElementById(link.toLowerCase().replace(' ', '-'));
       if (section) {

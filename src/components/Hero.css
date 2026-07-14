@@ -8,7 +8,7 @@
   padding: 80px 20px 40px;
   overflow: hidden;
   perspective: 1200px;
-  background: #0b0b0b;
+  background: var(--color-bg);
 }
 
 /* ===== GRILL BACKGROUND IMAGE ===== */
@@ -227,7 +227,7 @@
   padding: 8px 24px;
   border-radius: 50px;
   margin-bottom: 30px;
-  color: #f5b883;
+  color: var(--color-gold-light);
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 1px;
@@ -238,7 +238,7 @@
 }
 
 .hero-badge svg {
-  color: #e07c3c;
+  color: var(--color-orange);
   font-size: 0.7rem;
   animation: starPulse 2s ease-in-out infinite;
 }
@@ -284,13 +284,13 @@
 .title-text {
   font-size: 4.5rem;
   font-weight: 700;
-  color: #f0e3d8;
+  color: var(--color-text);
   line-height: 1.2;
   letter-spacing: -1px;
 }
 
 .highlight-3d {
-  background: linear-gradient(135deg, #f6b26b, #e07c3c, #f6b26b);
+  background: var(--gradient-warm);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -306,7 +306,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, transparent, #e07c3c, transparent);
+  background: linear-gradient(90deg, transparent, var(--color-orange), transparent);
   border-radius: 50%;
   filter: blur(4px);
   animation: glowLine 2s ease-in-out infinite;
@@ -350,7 +350,7 @@
 }
 
 .hero-description {
-  color: #bcb0a4;
+  color: var(--color-muted);
   font-size: 1.25rem;
   line-height: 1.8;
   font-weight: 300;
@@ -359,7 +359,7 @@
 }
 
 .accent-3d {
-  color: #f5b883;
+  color: var(--color-gold-light);
   font-weight: 500;
 }
 
@@ -387,14 +387,14 @@
   display: block;
   font-size: 2.2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #f6b26b, #e07c3c);
+  background: var(--gradient-warm);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .stat-label {
-  color: #a39082;
+  color: var(--color-muted);
   font-size: 0.85rem;
   font-weight: 300;
   letter-spacing: 0.5px;
@@ -427,8 +427,8 @@
   align-items: center;
   gap: 14px;
   text-decoration: none;
-  background: linear-gradient(135deg, #e07c3c, #f6b26b);
-  color: #0b0b0b;
+  background: var(--gradient-warm);
+  color: var(--color-bg);
   border: none;
   box-shadow: 0 10px 40px rgba(224, 124, 60, 0.15);
   position: relative;

@@ -4,7 +4,7 @@
   font-weight: 700;
   margin: 60px 0 30px;
   text-align: center;
-  background: linear-gradient(135deg, #f6b26b, #e07c3c);
+  background: var(--gradient-warm);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

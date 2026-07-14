@@ -12,11 +12,15 @@ import MenuPage from './components/MenuPage';
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showMenuPage, setShowMenuPage] = useState(false);
+  const [activeMenuView, setActiveMenuView] = useState('menu');
 
   const openCategory = (cat) => setSelectedCategory(cat);
   const closeModal = () => setSelectedCategory(null);
   
-  const openMenuPage = () => setShowMenuPage(true);
+  const openMenuPage = (view = 'menu') => {
+    setActiveMenuView(view);
+    setShowMenuPage(true);
+  };
   const closeMenuPage = () => setShowMenuPage(false);
 
   return (
@@ -53,7 +57,7 @@ function App() {
       )}
       
       {showMenuPage && (
-        <MenuPage onClose={closeMenuPage} />
+        <MenuPage onClose={closeMenuPage} view={activeMenuView} />
       )}
     </div>
   );

@@ -6,14 +6,15 @@
   align-items: center;
   padding: 20px 30px;
   flex-wrap: wrap;
-  background: rgba(11, 11, 11, 0.85);
+  background: rgba(11, 11, 11, 0.86);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 215, 150, 0.08);
+  border-bottom: 1px solid rgba(212, 160, 23, 0.16);
   position: sticky;
   top: 0;
   z-index: 100;
   transform-style: preserve-3d;
   perspective: 1000px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.24);
 }
 
 /* 3D Logo with glow */
@@ -23,14 +24,14 @@
   gap: 0.9rem;
   font-size: 1.9rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #f6b26b, #e07c3c);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: 2px;
   transform: rotateX(2deg) rotateY(-2deg);
   transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  text-shadow: 0 0 40px rgba(224, 124, 60, 0.3);
+  text-shadow: 0 0 40px rgba(212, 160, 23, 0.2);
   cursor: pointer;
 }
 
@@ -55,7 +56,7 @@
 }
 
 .nav-links a {
-  color: #e0d6cd;
+  color: #e8dccf;
   text-decoration: none;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
@@ -74,7 +75,7 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #f6b26b, #e07c3c);
+  background: var(--gradient-warm);
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform: translateX(-50%);
   box-shadow: 0 0 20px rgba(224, 124, 60, 0.4);
@@ -85,21 +86,21 @@
 }
 
 .nav-links a:hover {
-  color: #f5b883;
+  color: var(--color-gold-light);
   transform: translateY(-3px) translateZ(20px) rotateX(2deg);
   text-shadow: 0 10px 30px rgba(224, 124, 60, 0.3);
 }
 
 /* Active Link Style */
 .nav-links a.active {
-  color: #f5b883;
+  color: var(--color-gold-light);
   font-weight: 600;
   transform: translateY(-2px) translateZ(15px);
 }
 
 .nav-links a.active::before {
   width: 100%;
-  background: linear-gradient(90deg, #f6b26b, #e07c3c);
+  background: var(--gradient-warm);
   box-shadow: 0 0 30px rgba(224, 124, 60, 0.6);
 }
 
@@ -109,7 +110,7 @@
   top: -15px;
   right: -10px;
   font-size: 10px;
-  color: #e07c3c;
+  color: var(--color-orange);
   animation: sparkle 1.5s ease-in-out infinite;
 }
 

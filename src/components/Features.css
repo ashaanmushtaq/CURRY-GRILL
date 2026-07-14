@@ -33,7 +33,7 @@
   font-size: 2.8rem;
   font-weight: 700;
   text-align: center;
-  background: linear-gradient(135deg, #f6b26b, #e07c3c);
+  background: var(--gradient-warm);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -69,7 +69,7 @@
 }
 
 .features-subtitle i {
-  color: #e07c3c;
+  color: var(--color-orange);
   font-size: 0.8rem;
   animation: sparkle 2s ease-in-out infinite;
 }
@@ -173,7 +173,7 @@
   left: 2px;
   right: 2px;
   bottom: 2px;
-  background: #0b0b0b;
+  background: var(--color-bg);
   border-radius: 26px;
 }
 

@@ -1,9 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
+:root {
+  --color-primary: #f6b26b;
+  --color-gold: #e07c3c;
+  --color-orange: #e07c3c;
+  --color-gold-light: #f5b883;
+  --color-bg: #0b0b0b;
+  --color-card: #171514;
+  --color-text: #f5f0eb;
+  --color-muted: #a39082;
+  --gradient-primary: linear-gradient(135deg, #f6b26b, #e07c3c);
+  --gradient-warm: linear-gradient(135deg, #e07c3c, #f5b883);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -19,11 +36,15 @@ body {
   padding: 0 20px;
 }
 
-/* Add to existing App.css */
 #home, #menu, #menu-midi, #contact {
   scroll-margin-top: 100px;
 }
 
+::selection {
+  background: rgba(224, 124, 60, 0.35);
+  color: #f5f0eb;
+}
+
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #1f1f1f; }
-::-webkit-scrollbar-thumb { background: #e07c3c; border-radius: 6px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #e07c3c, #f5b883); border-radius: 6px; }
