@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Navbar.css';
+import logoImg from '../assets/Logo_1.png';
 
 const Navbar = ({ onMenuClick }) => {
   const [activeLink, setActiveLink] = useState('Home');
@@ -20,7 +21,10 @@ const Navbar = ({ onMenuClick }) => {
 
   return (
     <nav className="navbar">
-      <div className="logo">🍛 Curry Grill</div>
+      <div className="logo">
+        <img src={logoImg} alt="Curry Grill Logo" className="logo-image" />
+        <span>Curry Grill</span>
+      </div>
       <div className="nav-links">
         {['Home', 'Menu Midi', 'Menu', 'Contact'].map((link) => (
           <a
