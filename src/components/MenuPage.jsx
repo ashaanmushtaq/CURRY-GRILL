@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './MenuPage.css';
 
 // ===== LUNCH IMAGES =====
@@ -8,8 +8,6 @@ import naanSimpleImg from '../assets/Lunch/NAAN FROMAGE Simple.png';
 import naanTenderImg from '../assets/Lunch/NAAN FROMAGE Tender.png';
 import naanSikhKebabImg from '../assets/Lunch/NAAN FROMAGE Sikh Kabab.png';
 import naanSteakImg from '../assets/Lunch/NAAN FROMAGE Steak.png';
-import naanPayazImg from '../assets/Lunch/NAAN FROMAGE Payaz.png';
-import naanCheeseImg from '../assets/Lunch/NAAN FROMAGE.png';
 
 // ===== FONT AWESOME IMPORTS =====
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -52,163 +50,151 @@ import lunchImg from '../assets/Lunch/big Bowl.png';
 
 // ========== IMAGE MAPPING ==========
 const categoryImages = {
-  "Raitas": raitasImg,
-  "Samoussa": samoussaImg,
-  "Grill": chickenImg,
-  "Naan": naanImg,
-  "Shai Korma": chickenImg,
-  "Boeuf": beefImg,
-  "Agneau": lambImg,
-  "Fish": fishImg,
+  "Entrées Froides": raitasImg,
+  "Samossas & Pakora": samoussaImg,
+  "Grillades Tandoori": chickenImg,
+  "Pains Indiens": naanImg,
+  "Plats de Poulet": chickenImg,
+  "Plats de Bœuf": beefImg,
+  "Plats d'Agneau": lambImg,
+  "Poissons & Crevettes": fishImg,
   "Légumes": vegetablesImg,
   "Biryani": biryaniImg,
-  "Matar PillaO": riceImg,
-  "Lassi": lassiImg,
-  "Kheer": kheerImg,
-  "Halwa": halwaImg,
-  "Mango Mousse": mangoImg,
+  "Plats de Riz": riceImg,
+  "Boissons": lassiImg,
+  "Desserts": kheerImg,
   "Lunch": lunchImg
 };
 
 // ========== ICON MAPPING ==========
 const categoryIcons = {
-  "Raitas": faBowlFood,
-  "Samoussa": faEgg,
-  "Grill": faFire,
-  "Naan": faBreadSlice,
-  "Shai Korma": faUtensils,
-  "Boeuf": faCow,
-  "Agneau": faDrumstickBite,
-  "Fish": faFish,
+  "Entrées Froides": faBowlFood,
+  "Samossas & Pakora": faEgg,
+  "Grillades Tandoori": faFire,
+  "Pains Indiens": faBreadSlice,
+  "Plats de Poulet": faUtensils,
+  "Plats de Bœuf": faCow,
+  "Plats d'Agneau": faDrumstickBite,
+  "Poissons & Crevettes": faFish,
   "Légumes": faLeaf,
   "Biryani": faUtensils,
-  "Matar PillaO": faSeedling,
-  "Lassi": faMugSaucer,
-  "Kheer": faCakeCandles,
-  "Halwa": faCandyCane,
-  "Mango Mousse": faIceCream,
+  "Plats de Riz": faSeedling,
+  "Boissons": faMugSaucer,
+  "Desserts": faCakeCandles,
   "Lunch": faBowlFood
 };
 
 // ========== FULL MENU DATA ==========
 const fullMenuData = {
-  "Raitas": [
-    { name: "RAITA", desc: "Yogurt, tomate, concombre parfumés aux épices", price: "5,50 €" },
-    { name: "RAITA CREVETTES", desc: "Yogurt, tomates, concombres, crevettes", price: "7,00 €" },
-    { name: "RAITA AUBERGINES", desc: "Yogurt, aubergines grillées, tomate, concombre", price: "7,00 €" }
+  "Entrées Froides": [
+    { name: "RAITA", desc: "Yaourt, tomate, concombre parfumés aux épices", price: "5,50 €" },
+    { name: "RAITA CREVETTES", desc: "Yaourt, tomates, concombres, crevettes", price: "7,00 €" },
+    { name: "RAITA AUBERGINES", desc: "Yaourt, aubergines grillées, tomate, concombre", price: "7,00 €" }
   ],
-  "Samoussa": [
+  "Samossas & Pakora": [
     { name: "SAMOUSSA LÉGUMES", desc: "Beignets fourrés aux légumes épicés", price: "6,00 €" },
-    { name: "SAMOUSSA VIANDE", desc: "Beignets fourrés viande hachée de boeuf", price: "6,50 €" },
+    { name: "SAMOUSSA VIANDE", desc: "Beignets fourrés à la viande hachée de bœuf", price: "6,50 €" },
     { name: "OIGNON BHAJA", desc: "Beignets d'oignons aux épices", price: "6,00 €" },
     { name: "CHICKEN PAKORA", desc: "Beignets de poulet marinés aux épices", price: "6,00 €" },
-    { name: "AUBERGINE PAKORA", desc: "Beignets d'aubergines et pomme de terre aux épices", price: "5,50 €" },
+    { name: "AUBERGINE PAKORA", desc: "Beignets d'aubergines et pomme de terre", price: "5,50 €" },
     { name: "CHEESE PAKORA", desc: "Beignets de fromage aux épices", price: "6,50 €" }
   ],
-  "Grill": [
+  "Grillades Tandoori": [
     { name: "POULET TANDOORI", desc: "Cuisse de poulet grillée au tandoor", price: "9,50 €" },
     { name: "TANDOORI KEBAB", desc: "Viande d'agneau hachée, oignons, piment vert", price: "12,00 €" },
     { name: "POULET TIKKA", desc: "Blanc de poulet mariné, doré au tandoor", price: "10,50 €" },
     { name: "FISH TIKKA", desc: "Brochette de saumon grillée au tandoor", price: "11,50 €" },
-    { name: "GAMBAS GEANTES TANDOORI", desc: "2 pièces grillées", price: "25,00 €" },
-    { name: "AGNEAU TIKKA", desc: "Filet d'agneau mariné et grillé", price: "13,00 €" },
-    { name: "TANDOORI MIXED GRILL", desc: "1 pièce agneau, poulet, poisson, kebab et gambas", price: "26,00 €" }
+    { name: "GAMBAS GÉANTES TANDOORI", desc: "2 pièces de gambas grillées", price: "25,00 €" },
+    { name: "AGNEAU TIKKA", desc: "Filet d'agneau mariné et grillé au tandoor", price: "13,00 €" },
+    { name: "GRILL MIXTE TANDOORI", desc: "Assortiment d'agneau, poulet, poisson, kebab et gambas", price: "26,00 €" }
   ],
-  "Naan": [
-    { name: "NAAN FROMAGE", desc: "Pain fourré au fromage fondant", price: "4,50 €" },
+  "Pains Indiens": [
+    { name: "NAAN FROMAGE", desc: "Pain fourré au fromage fondant (non piquant)", price: "4,50 €" },
     { name: "NAAN NATURE", desc: "Pain à pâte levée farine de froment", price: "3,50 €" },
     { name: "CHAPPATI", desc: "Pain à farine complète", price: "3,50 €" },
-    { name: "NAAN BUTTER", desc: "Pain à pâte levée, fourré au beurre", price: "3,50 €" },
-    { name: "NAAN AIL CORIANDRE", desc: "Pain à pâte levée à l'ail et coriandre", price: "4,50 €" },
-    { name: "NAAN AIL FROMAGE", desc: "Pain à pâte levée, fourré à l'ail et fromage fondant", price: "5,00 €" },
-    { name: "NAAN KEEMA", desc: "Pain à pâte levée fourré viande hachée de boeuf", price: "6,50 €" }
+    { name: "NAAN BEURRE", desc: "Pain fourré au beurre", price: "3,50 €" },
+    { name: "NAAN AIL CORIANDRE", desc: "Pain à l'ail et à la coriandre", price: "4,50 €" },
+    { name: "NAAN AIL FROMAGE", desc: "Pain à l'ail et au fromage fondant", price: "5,00 €" },
+    { name: "NAAN KEEMA", desc: "Pain fourré à la viande hachée de bœuf", price: "6,50 €" }
   ],
-  "Shai Korma": [
-    { name: "POULET SHAI KORMA", desc: "Cajou, coco avec crème, saveur douce", price: "13,50 €" },
-    { name: "POULET BUTTER", desc: "Poulet mariné, grillé dans une sauce douce aux noix de cajou et coco", price: "14,50 €" },
-    { name: "POULET JALFREZI", desc: "Sauce épicée avec poivrons et légumes", price: "13,50 €" },
-    { name: "POULET VINDALOO", desc: "Blanc de poulet sauce épicée forte", price: "13,50 €" },
-    { name: "POULET TIKKA MASSALA", desc: "Blancs de poulet grillés, oignons, tomate, gingembre", price: "13,50 €" },
-    { name: "POULET CURRY", desc: "Blancs de poulet cuisinés sauce curry doux", price: "13,50 €" },
+  "Plats de Poulet": [
+    { name: "POULET TIKKA PALAK", desc: "Suprême de poulet mariné et grillé, épinards frais", price: "16,50 €" },
+    { name: "POULET BUTTER", desc: "Poulet mariné, sauce douce aux noix de cajou et coco", price: "14,50 €" },
+    { name: "POULET SHAHI KORMA", desc: "Poulet sauce douce aux noix de cajou, coco et crème", price: "13,50 €" },
+    { name: "POULET JALFREZI", desc: "Poulet sauce épicée aux poivrons (fort)", price: "13,50 €" },
+    { name: "POULET VINDALOO", desc: "Blanc de poulet sauce épicée (très fort)", price: "13,50 €" },
+    { name: "POULET TIKKA MASSALA", desc: "Blancs de poulet grillés aux oignons, tomate, gingembre", price: "13,50 €" },
+    { name: "POULET CURRY", desc: "Blancs de poulet cuisinés sauce curry (doux)", price: "13,50 €" },
     { name: "POULET MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "13,50 €" },
-    { name: "POULET PALAK", desc: "Suprême de poulet aux épinards, épices et coriandre", price: "14,50 €" },
-    { name: "POULET TIKKA PALAK", desc: "Suprême de poulet mariné, grillé et cuit avec épinards frais", price: "16,50 €" }
+    { name: "POULET PALAK", desc: "Suprême de poulet aux épinards et coriandre fraîche", price: "14,50 €" }
   ],
-  "Boeuf": [
-    { name: "BOEUF KORMA", desc: "Boeuf dans une sauce douce, amandes, coco, noix de cajou", price: "14,50 €" },
-    { name: "BOEUF KRAI", desc: "Préparé avec tomate, gingembre, citron", price: "14,00 €" },
-    { name: "BOEUF CURRY", desc: "Boeuf préparé avec une sauce douce au curry", price: "14,50 €" },
-    { name: "BOEUF MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "14,50 €" },
-    { name: "BOEUF VINDALOO", desc: "Boeuf sauce épicée forte", price: "15,00 €" },
-    { name: "BOEUF JALFRÉZI", desc: "Boeuf, poivrons, épices", price: "15,00 €" },
-    { name: "BOEUF MASSALA", desc: "Sauce tomate, oignon, poivrons, gingembre, coriandre", price: "14,50 €" }
+  "Plats de Bœuf": [
+    { name: "BŒUF KORMA", desc: "Bœuf sauce douce aux amandes, coco et noix de cajou", price: "14,50 €" },
+    { name: "BŒUF KRAI", desc: "Bœuf préparé avec tomate, gingembre, citron (moyen)", price: "14,00 €" },
+    { name: "BŒUF CURRY", desc: "Bœuf préparé avec une sauce douce au curry", price: "14,50 €" },
+    { name: "BŒUF MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "14,50 €" },
+    { name: "BŒUF VINDALOO", desc: "Bœuf sauce épicée (fort)", price: "15,00 €" },
+    { name: "BŒUF JALFRÉZI", desc: "Bœuf aux poivrons et épices", price: "15,00 €" },
+    { name: "BŒUF MASSALA", desc: "Sauce tomate, oignon, poivrons, gingembre, coriandre", price: "14,50 €" }
   ],
-  "Agneau": [
-    { name: "AGNEAU KORMA", desc: "Agneau aux amandes, coco, noix de cajou avec crème", price: "15,50 €" },
-    { name: "AGNEAU JALFRÉZI", desc: "Agneau, poivrons, épices", price: "16,00 €" },
-    { name: "AGNEAU PALAK", desc: "Agneau aux épinards et sauce épicée", price: "16,00 €" },
-    { name: "AGNEAU CURRY", desc: "Plat du Panjab aux épices douces", price: "15,00 €" },
-    { name: "AGNEAU TIKKA MASSALA", desc: "Agneau grillé tandoor avec sauces épicées", price: "16,00 €" },
+  "Plats d'Agneau": [
+    { name: "AGNEAU KORMA", desc: "Agneau aux amandes, coco et noix de cajou (doux)", price: "15,50 €" },
+    { name: "AGNEAU JALFRÉZI", desc: "Agneau aux poivrons et épices", price: "16,00 €" },
+    { name: "AGNEAU PALAK", desc: "Agneau aux épinards et sauce épicée (moyen)", price: "16,00 €" },
+    { name: "AGNEAU CURRY", desc: "Plat du Penjab aux épices douces", price: "15,00 €" },
+    { name: "AGNEAU TIKKA MASSALA", desc: "Agneau grillé au tandoor avec sauces épicées", price: "16,00 €" },
     { name: "AGNEAU MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "15,50 €" }
   ],
-  "Fish": [
+  "Poissons & Crevettes": [
     { name: "FISH CURRY", desc: "Saumon grillé sauce curry relevée", price: "18,00 €" },
-    { name: "GAMBAS MASSALA", desc: "Gambas marinées, épices douces et grillées", price: "28,00 €" },
-    { name: "CREVETTES JALFRÉZI", desc: "Crevettes cuisinées avec poivrons, épices fortes", price: "18,00 €" },
-    { name: "FISH TIKKA MASSALA", desc: "Saumon grillé et sauce tomate, poivrons, gingembre", price: "18,00 €" },
-    { name: "FISH KORMA", desc: "Saumon grillé au tandoor aux noix de cajou, coco et crème", price: "18,00 €" },
-    { name: "CREVETTES CURRY", desc: "Crevettes marinées oignon, tomate, gingembre, citron, poivrons", price: "15,00 €" },
-    { name: "CREVETTES KORMA", desc: "Crevettes aux amandes, noix de cajou, coco avec crème", price: "16,50 €" }
+    { name: "GAMBAS MASSALA", desc: "Gambas marinées aux épices douces grillées", price: "28,00 €" },
+    { name: "CREVETTES JALFRÉZI", desc: "Crevettes aux poivrons et épices (fort)", price: "18,00 €" },
+    { name: "FISH TIKKA MASSALA", desc: "Saumon grillé sauce tomates, poivrons, gingembre", price: "18,00 €" },
+    { name: "FISH KORMA", desc: "Saumon grillé aux noix de cajou, coco et crème", price: "18,00 €" },
+    { name: "CREVETTES CURRY", desc: "Crevettes marinées oignon, tomate, gingembre, citron", price: "15,00 €" },
+    { name: "CREVETTES KORMA", desc: "Crevettes aux amandes, noix de cajou, coco (doux)", price: "16,50 €" }
   ],
   "Légumes": [
     { name: "DESI DAL", desc: "Lentilles indiennes maison relevées", price: "8,00 €" },
     { name: "MIX LÉGUMES", desc: "Mélange de légumes et pois chiches épicé", price: "8,00 €" },
     { name: "ALOU PALAK", desc: "Épinards, pommes de terre, épices douces", price: "8,50 €" },
-    { name: "PALAK PANEER", desc: "Curry d'épinard et fromage aux épices variées", price: "12,50 €" },
-    { name: "BHARTA", desc: "Caviar d'aubergines passées au tandoor et cuisinées avec épices et crème", price: "9,00 €" },
-    { name: "SOUPE DAL", desc: "Préparation avec lentilles indiennes, oignons verts, coriandre", price: "8,50 €" }
+    { name: "PALAK PANEER", desc: "Curry d'épinards et fromage aux épices variées", price: "12,50 €" },
+    { name: "BHARTA", desc: "Caviar d'aubergines passées au tandoor, épices et crème", price: "9,00 €" },
+    { name: "SOUPE DAL", desc: "Lentilles indiennes, oignons verts, coriandre", price: "8,50 €" }
   ],
   "Biryani": [
-    { name: "BIRYANI POULET", desc: "Riz basmati avec blancs de poulet, amandes, citron, safran", price: "17,00 €" },
-    { name: "BIRYANI AGNEAU", desc: "Riz basmati avec agneau, amandes, citron, safran", price: "18,50 €" },
-    { name: "BIRYANI CREVETTES", desc: "Riz basmati avec crevettes, amandes, citron, safran", price: "18,50 €" },
-    { name: "BIRYANI BOEUF", desc: "Riz basmati avec morceaux de boeuf, amandes, citron, safran", price: "17,50 €" },
-    { name: "BIRYANI POISSON", desc: "Riz basmati avec poisson grillé, amandes, citron, safran", price: "19,50 €" }
+    { name: "BIRYANI POULET", desc: "Riz basmati aux blancs de poulet, amandes, safran", price: "17,00 €" },
+    { name: "BIRYANI AGNEAU", desc: "Riz basmati à l'agneau, amandes, citron, safran", price: "18,50 €" },
+    { name: "BIRYANI CREVETTES", desc: "Riz basmati aux crevettes, amandes, safran", price: "18,50 €" },
+    { name: "BIRYANI BŒUF", desc: "Riz basmati au bœuf, amandes, citron, safran", price: "17,50 €" },
+    { name: "BIRYANI POISSON", desc: "Riz basmati au poisson grillé, amandes, safran", price: "19,50 €" }
   ],
-  "Matar PillaO": [
+  "Plats de Riz": [
     { name: "MATAR PILLAO", desc: "Riz basmati aux petits pois", price: "5,50 €" },
     { name: "CHANA PILLAO", desc: "Riz basmati aux pois chiches", price: "5,50 €" },
     { name: "RIZ KASHMIRI", desc: "Riz basmati aux raisins, fruits secs et safran", price: "6,50 €" },
     { name: "RIZ BASMATI NATURE", desc: "Riz basmati nature, léger et parfumé au safran", price: "4,50 €" },
-    { name: "EGG FRIED RICE", desc: "Riz frit aux œufs, carottes, chou, haricots et poivre blanc", price: "8,00 €" }
+    { name: "RIZ FRIT AUX ŒUFS", desc: "Riz frit aux œufs, carottes, chou et poivre blanc", price: "8,00 €" }
   ],
-  "Lunch": [
-    { name: "LUNCH BOWL", desc: "Bowl de riz, curry maison et naan chaud", price: "12,50 €" },
-    { name: "NAAN LUNCH", desc: "Naan au poulet grillé, sauce tomate et salade", price: "10,50 €" },
-    { name: "SPECIAL LUNCH", desc: "Assiette spéciale avec tikka, riz et légumes", price: "13,50 €" }
-  ],
-  "Lunch": [
-    { name: "LUNCH BOWL", desc: "Bowl de riz, curry maison et naan chaud", price: "12,50 €" },
-    { name: "NAAN LUNCH", desc: "Naan au poulet grillé, sauce tomate et salade", price: "10,50 €" },
-    { name: "SPECIAL LUNCH", desc: "Assiette spéciale avec tikka, riz et légumes", price: "13,50 €" }
-  ],
-  "Lassi": [
+  "Boissons": [
     { name: "LASSI NATURE", desc: "Yaourt battu nature, onctueux et rafraîchissant", price: "6,00 €" },
-    { name: "LASSI SALÉ", desc: "Yaourt salé légèrement épicé avec cumin", price: "6,00 €" },
+    { name: "LASSI SALÉ", desc: "Yaourt salé légèrement épicé au cumin", price: "6,00 €" },
     { name: "LASSI SUCRÉ", desc: "Yaourt sucré à la douceur délicate", price: "6,00 €" },
-    { name: "LASSI MANGUE", desc: "Yaourt onctueux mélangé à la pulpe de mangue", price: "6,00 €" },
-    { name: "LASSI ROSE", desc: "Yaourt parfumé à la rose", price: "6,00 €" },
-    { name: "LASSI BANANE", desc: "Yaourt crémeux à la banane", price: "6,00 €" },
-    { name: "LEMO PANI", desc: "Limonade indienne rafraîchissante au citron vert et épices", price: "6,50 €" }
+    { name: "LASSI MANGUE", desc: "Yaourt à la pulpe de mangue exotique", price: "6,00 €" },
+    { name: "LASSI ROSE", desc: "Yaourt parfumé à la rose, délicat et subtil", price: "6,00 €" },
+    { name: "LASSI BANANE", desc: "Yaourt crémeux à la banane, doux et nourrissant", price: "6,00 €" },
+    { name: "LEMO PANI", desc: "Limonade indienne au citron vert, épices douces et rose", price: "6,50 €" }
   ],
-  "Kheer": [
-    { name: "KHEER", desc: "Riz au lait avec amandes, pistaches, noix de coco et raisins", price: "6,00 €" }
+  "Desserts": [
+    { name: "KHEER", desc: "Riz au lait aux amandes, pistaches, noix de coco, raisins secs", price: "6,00 €" },
+    { name: "HALWA", desc: "Gâteau de semoule aux raisins, coco, safran, servi tiède", price: "6,00 €" },
+    { name: "MOUSSE À LA MANGUE", desc: "Pulpe de mangue indienne, coco, amandes, façon mousse", price: "6,00 €" }
   ],
-  "Halwa": [
-    { name: "HALWA", desc: "Gâteau de semoule aux raisins, coco et safran", price: "6,00 €" }
-  ],
-  "Mango Mousse": [
-    { name: "MANGO MOUSSE", desc: "Pulpe de mangue indienne, coco, amandes, servi frais", price: "7,00 €" }
+  // ===== LUNCH CATEGORY ADDED =====
+  "Lunch": [
+    { name: "LUNCH BOWL", desc: "Bowl de riz, curry maison et naan chaud", price: "12,50 €" },
+    { name: "NAAN LUNCH", desc: "Naan au poulet grillé, sauce tomate et salade", price: "10,50 €" },
+    { name: "SPECIAL LUNCH", desc: "Assiette spéciale avec tikka, riz et légumes", price: "13,50 €" }
   ]
 };
 
@@ -232,11 +218,9 @@ const menuMidiData = [
       { name: 'BOWL PLEIN', price: '8,90 €', image: lunchBowlImg },
       { name: 'DEMI BOWL', price: '6,90 €', image: smallBowlImg }
     ]
-    
   },
   {
-    title: 'MENU MIDI BOWL AVEC BOISSON (Includes Drink)',
-    // ===== SIRF TITLES - NO IMAGES, NO PRICE =====
+    title: 'MENU MIDI BOWL AVEC BOISSON',
     items: [
       { name: 'BOWL RIZ BASMATI SAFRAN (POULET CURRY)' },
       { name: 'BOWL RIZ BASMATI SAFRAN (POULET TIKKA MASALA)' },
@@ -291,7 +275,7 @@ const MenuPage = ({ onClose, view = 'menu' }) => {
 
         <h1 className="menu-page-title">
           <FontAwesomeIcon icon={faUtensils} />
-          {isMidiView ? 'Menu Midi' : 'Our Premium Menu'}
+          {isMidiView ? 'Menu Midi' : 'Notre Menu Premium'}
         </h1>
 
         {isMidiView ? (
@@ -302,7 +286,6 @@ const MenuPage = ({ onClose, view = 'menu' }) => {
 
             <div className="midi-sections">
               {menuMidiData.map((section, index) => {
-                // Check if section has images (first 2 sections have images)
                 const hasImages = section.items.some(item => item.image);
                 
                 return (
@@ -311,7 +294,6 @@ const MenuPage = ({ onClose, view = 'menu' }) => {
                     {section.subtitle && <p className="midi-section-subtitle">{section.subtitle}</p>}
                     
                     {hasImages ? (
-                      // ===== FULL SIZE CARDS (With Images) =====
                       <div className="midi-items-grid-full">
                         {section.items.map((item, itemIndex) => (
                           <div key={`${section.title}-${itemIndex}`} className="midi-item-card-full">
@@ -335,7 +317,6 @@ const MenuPage = ({ onClose, view = 'menu' }) => {
                         ))}
                       </div>
                     ) : (
-                      // ===== SIRF TITLES - CENTER ALIGNED (No Images, No Price) =====
                       <div className="midi-items-list-center">
                         {section.items.map((item, itemIndex) => (
                           <div key={`${section.title}-${itemIndex}`} className="midi-item-center">
@@ -386,7 +367,7 @@ const MenuPage = ({ onClose, view = 'menu' }) => {
                     <h3 className="card-category-name">{category}</h3>
                     <span className="card-item-count">
                       <span className="count-number">{fullMenuData[category]?.length || 0}</span>
-                      <span className="count-label">items</span>
+                      <span className="count-label">plats</span>
                     </span>
                   </div>
                   
@@ -405,30 +386,46 @@ const MenuPage = ({ onClose, view = 'menu' }) => {
           <div className="category-items-view">
             <button className="back-btn" onClick={handleBack}>
               <FontAwesomeIcon icon={faChevronLeft} />
-              Back to Menu
+              Retour au Menu
             </button>
             
-            <div className="category-header">
-              <div className="category-icon-large">
-                <FontAwesomeIcon icon={categoryIcons[selectedCategory] || faUtensils} />
+            <div className="category-banner">
+              <img 
+                src={categoryImages[selectedCategory]} 
+                alt={selectedCategory}
+                className="category-banner-image"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.style.background = '#1a1a1a';
+                  e.target.parentElement.innerHTML = `
+                    <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#f5b883;font-size:1.2rem;font-weight:600;">
+                      ${selectedCategory}
+                    </div>
+                  `;
+                }}
+              />
+              <div className="category-banner-overlay">
+                <div className="category-banner-content">
+                  <h2 className="category-banner-title">{selectedCategory}</h2>
+                  <span className="category-banner-total">{fullMenuData[selectedCategory]?.length} plats</span>
+                </div>
               </div>
-              <h2 className="category-title">{selectedCategory}</h2>
-              <span className="category-total">{fullMenuData[selectedCategory]?.length} items</span>
             </div>
 
-            <div className="items-grid">
+            <div className="items-list">
               {fullMenuData[selectedCategory]?.map((item, index) => (
                 <div 
                   key={index} 
-                  className="item-card"
+                  className="item-row"
                   style={{ animationDelay: `${index * 0.06}s` }}
                 >
-                  <div className="item-number">{index + 1}</div>
-                  <div className="item-details">
-                    <h4 className="item-name">{item.name}</h4>
-                    <p className="item-desc">{item.desc}</p>
+                  <div className="item-row-number">{index + 1}</div>
+                  <div className="item-row-details">
+                    <h4 className="item-row-name">{item.name}</h4>
+                    <p className="item-row-desc">{item.desc}</p>
                   </div>
-                  <div className="item-price-tag">
+                  <div className="item-row-price">
                     <span>{item.price}</span>
                   </div>
                 </div>

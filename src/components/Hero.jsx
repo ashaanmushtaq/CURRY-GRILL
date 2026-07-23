@@ -1,14 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
 
 // ===== FONT AWESOME IMPORTS =====
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUtensils, faArrowRight, faStar, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils, faArrowRight, faStar } from '@fortawesome/free-solid-svg-icons';
 
 const Hero = ({ onMenuClick }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [displayText, setDisplayText] = useState('');
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [counters, setCounters] = useState({ years: 0, dishes: 0, customers: 0 });
+  const [showStats, setShowStats] = useState(false);
+  const heroRef = useRef(null);
+  
+  const fullText = "Bienvenue au Curry Grill";
+  const typingSpeed = 50;
 
+  // ===== TYPEWRITER EFFECT FOR TITLE =====
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index < fullText.length) {
+        setDisplayText(fullText.substring(0, index + 1));
+        index++;
+      } else {
+        clearInterval(timer);
+        setIsTypingComplete(true);
+        setTimeout(() => setShowContent(true), 200);
+      }
+    }, typingSpeed);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // ===== COUNTER ANIMATION FOR NUMBERS =====
+  useEffect(() => {
+    if (showStats) {
+      const duration = 2000;
+      const steps = 60;
+      const interval = duration / steps;
+      
+      const targets = { years: 15, dishes: 50, customers: 1000 };
+      let currentStep = 0;
+
+      const timer = setInterval(() => {
+        currentStep++;
+        const progress = currentStep / steps;
+        const eased = 1 - Math.pow(1 - progress, 3);
+        
+        setCounters({
+          years: Math.round(eased * targets.years),
+          dishes: Math.round(eased * targets.dishes),
+          customers: Math.round(eased * targets.customers)
+        });
+
+        if (currentStep >= steps) {
+          setCounters({
+            years: targets.years,
+            dishes: targets.dishes,
+            customers: targets.customers
+          });
+          clearInterval(timer);
+        }
+      }, interval);
+
+      return () => clearInterval(timer);
+    }
+  }, [showStats]);
+
+  // ===== SCROLL OBSERVER FOR STATS =====
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowStats(true);
+        } else {
+          setShowStats(false);
+          setCounters({ years: 0, dishes: 0, customers: 0 });
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    const currentHero = heroRef.current;
+    if (currentHero) {
+      observer.observe(currentHero);
+    }
+
+    return () => {
+      if (currentHero) {
+        observer.unobserve(currentHero);
+      }
+    };
+  }, []);
+
+  // ===== 3D MOUSE TRACKING =====
   useEffect(() => {
     const handleMouseMove = (e) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -21,7 +109,7 @@ const Hero = ({ onMenuClick }) => {
   }, []);
 
   return (
-    <section className="hero-3d">
+    <section className="hero-3d" ref={heroRef}>
       {/* ===== 3D ANIMATED BACKGROUND ===== */}
       <div className="hero-bg-3d">
         <div className="bg-layer layer-1"></div>
@@ -31,7 +119,7 @@ const Hero = ({ onMenuClick }) => {
 
       {/* ===== FLOATING PARTICLES ===== */}
       <div className="hero-particles">
-        {[...Array(30)].map((_, i) => (
+        {[...Array(40)].map((_, i) => (
           <div 
             key={i} 
             className="particle"
@@ -68,21 +156,22 @@ const Hero = ({ onMenuClick }) => {
       <div 
         className="hero-content-3d"
         style={{
-          transform: `rotateX(${mousePosition.y * 3}deg) rotateY(${mousePosition.x * 3}deg) translateZ(50px)`
+          transform: `rotateX(${mousePosition.y * 2}deg) rotateY(${mousePosition.x * 2}deg) translateZ(30px)`
         }}
       >
         {/* Badge */}
         <div className="hero-badge">
           <FontAwesomeIcon icon={faStar} />
-          <span>Premium Indian & Pakistani Cuisine</span>
+          <span>Cuisine Indienne & Pakistanaise</span>
           <FontAwesomeIcon icon={faStar} />
         </div>
 
-        {/* Main Title */}
+        {/* Main Title with Typewriter */}
         <h1 className="hero-title">
           <span className="title-line-left"></span>
           <span className="title-text">
-            Welcome to <span className="highlight-3d">Curry Grill</span>
+            {displayText}
+            <span className={`cursor ${isTypingComplete ? 'blink' : ''}`}>|</span>
           </span>
           <span className="title-line-right"></span>
         </h1>
@@ -90,58 +179,45 @@ const Hero = ({ onMenuClick }) => {
         {/* Subtitle */}
         <div className="hero-subtitle-wrapper">
           <div className="quote-mark quote-left">"</div>
-          <p className="hero-description">
-            <span className="accent-3d">La force de Curry Grill ?</span> 
+          <p className={`hero-description ${showContent ? 'visible' : ''}`}>
+            <span className="accent-3d">"La force de Curry Grill ?"</span> 
             Un menu unique réunissant les saveurs authentiques 
             des cuisines pakistanaise et indienne en un seul endroit.
           </p>
           <div className="quote-mark quote-right">"</div>
         </div>
 
-        {/* Stats */}
-        <div className="hero-stats">
+        {/* Stats with Counter Animation */}
+        <div className={`hero-stats ${showContent ? 'visible' : ''}`}>
           <div className="stat-item">
-            <span className="stat-number">15+</span>
-            <span className="stat-label">Years of Excellence</span>
+            <span className="stat-number">{counters.years}+</span>
+            <span className="stat-label">Ans d'excellence</span>
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item">
-            <span className="stat-number">50+</span>
-            <span className="stat-label">Authentic Dishes</span>
+            <span className="stat-number">{counters.dishes}+</span>
+            <span className="stat-label">Plats authentiques</span>
           </div>
           <div className="stat-divider"></div>
           <div className="stat-item">
-            <span className="stat-number">1000+</span>
-            <span className="stat-label">Happy Customers</span>
+            <span className="stat-number">{counters.customers}+</span>
+            <span className="stat-label">Clients satisfaits</span>
           </div>
         </div>
 
         {/* Buttons */}
-        <div className="hero-actions">
+        <div className={`hero-actions ${showContent ? 'visible' : ''}`}>
           <button 
-            className="hero-btn-3d primary" 
+            className="hero-btn-3d" 
             onClick={onMenuClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
             <FontAwesomeIcon icon={faUtensils} />
-            View Menu
+            Voir le Menu
             <FontAwesomeIcon icon={faArrowRight} className={`btn-arrow ${isHovered ? 'active' : ''}`} />
           </button>
-          
-          {/* <button className="hero-btn-3d secondary">
-            <FontAwesomeIcon icon={faPlay} />
-            Watch Story
-          </button> */}
         </div>
-
-        {/* Scroll Indicator */}
-        {/* <div className="scroll-indicator">
-          <span className="scroll-text">Scroll to explore</span>
-          <div className="scroll-line">
-            <span></span>
-          </div>
-        </div> */}
       </div>
 
       {/* ===== BOTTOM DECORATION ===== */}

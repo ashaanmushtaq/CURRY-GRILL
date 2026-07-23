@@ -6,6 +6,7 @@ const Features = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
+  // ===== SCROLL REVEAL =====
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -13,7 +14,7 @@ const Features = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -70,13 +71,13 @@ const Features = () => {
       
       <h2 className="features-title">
         <span className="title-line"></span>
-        Why Choose Us
+        Pourquoi Nous Choisir
         <span className="title-line"></span>
       </h2>
       
       <p className="features-subtitle">
         <i className="fa-solid fa-sparkles"></i>
-        Experience the difference with our premium quality
+        Découvrez la différence avec notre qualité premium
         <i className="fa-solid fa-sparkles"></i>
       </p>
 
@@ -86,7 +87,7 @@ const Features = () => {
             key={index}
             className={`feature-box-3d ${hoveredIndex === index ? 'hovered' : ''}`}
             style={{
-              animationDelay: `${index * 0.15}s`,
+              animationDelay: `${index * 0.2}s`,
               '--feature-color': feature.color,
               '--feature-gradient': feature.gradient
             }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Footer.css';
 
 // ===== FONT AWESOME IMPORTS =====
@@ -29,7 +29,27 @@ import {
 
 const Footer = () => {
   const [hoveredSocial, setHoveredSocial] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const footerRef = useRef(null);
   const currentYear = new Date().getFullYear();
+
+  // ===== SCROLL REVEAL =====
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const socialLinks = [
     { icon: faFacebookF, color: "#1877F2", label: "Facebook", link: "https://facebook.com/currygrill" },
@@ -40,10 +60,10 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { name: "Home", link: "#" },
-    { name: "Menu Midi", link: "#" },
-    { name: "Full Menu", link: "#" },
-    { name: "Contact", link: "#" }
+    { name: "Accueil", link: "#home" },
+    { name: "Menu Midi", link: "#menu-midi" },
+    { name: "Menu Complet", link: "#menu" },
+    { name: "Contact", link: "#contact" }
   ];
 
   const contactInfo = [
@@ -53,12 +73,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="footer-3d">
-      {/* 3D Shapes */}
-      <div className="shape-3d"></div>
-      <div className="shape-3d"></div>
-      <div className="shape-3d"></div>
-      
+    <footer className="footer-3d" ref={footerRef}>
       {/* Background Glow */}
       <div className="footer-glow"></div>
       
@@ -71,25 +86,25 @@ const Footer = () => {
 
       <div className="footer-content">
         {/* Brand Column */}
-        <div className="footer-col-3d brand-col">
+        <div className={`footer-col-3d brand-col ${isVisible ? 'visible' : ''}`}>
           <div className="footer-logo">
             <span className="logo-icon">🍛</span>
             <h2>Curry Grill</h2>
           </div>
           <p className="brand-desc">
-            Authentic Pakistani & Indian cuisine served with passion and tradition since 2020.
+            Cuisine pakistanaise et indienne authentique, servie avec passion et tradition depuis 2020.
           </p>
           <div className="brand-badge">
             <FontAwesomeIcon icon={faStar} />
-            <span>Premium Quality</span>
+            <span>Qualité Premium</span>
           </div>
         </div>
 
         {/* Quick Links */}
-        <div className="footer-col-3d">
+        <div className={`footer-col-3d ${isVisible ? 'visible' : ''}`}>
           <h4>
             <FontAwesomeIcon icon={faLink} />
-            Quick Links
+            Liens Rapides
           </h4>
           <ul>
             {quickLinks.map((link, index) => (
@@ -104,7 +119,7 @@ const Footer = () => {
         </div>
 
         {/* Contact Info */}
-        <div className="footer-col-3d">
+        <div className={`footer-col-3d ${isVisible ? 'visible' : ''}`}>
           <h4>
             <FontAwesomeIcon icon={faAddressCard} />
             Contact
@@ -120,14 +135,14 @@ const Footer = () => {
         </div>
 
         {/* Hours & Social */}
-        <div className="footer-col-3d">
+        <div className={`footer-col-3d ${isVisible ? 'visible' : ''}`}>
           <h4>
             <FontAwesomeIcon icon={faClock} />
-            Hours
+            Horaires
           </h4>
           <div className="hours-container">
             <div className="hour-item">
-              <span className="day">Mon - Sun</span>
+              <span className="day">Lun - Dim</span>
               <div className="time-slots">
                 <span className="time">12:00 - 14:30</span>
                 <span className="time">18:00 - 22:30</span>
@@ -135,9 +150,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Social Section */}
           <div className="social-section">
-            <h5>Follow Us</h5>
+            <h5>Suivez-nous</h5>
             <div className="social-icons-3d">
               {socialLinks.map((social, index) => (
                 <a
@@ -147,8 +161,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className={`social-icon-3d ${hoveredSocial === index ? 'hovered' : ''}`}
                   style={{
-                    '--social-color': social.color,
-                    animationDelay: `${index * 0.1}s`
+                    '--social-color': social.color
                   }}
                   onMouseEnter={() => setHoveredSocial(index)}
                   onMouseLeave={() => setHoveredSocial(null)}
@@ -164,21 +177,21 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="footer-bottom">
+      <div className={`footer-bottom ${isVisible ? 'visible' : ''}`}>
         <div className="footer-bottom-content">
           <p className="copyright">
             <FontAwesomeIcon icon={faCopyright} />
-            {currentYear} Curry Grill. All Rights Reserved.
+            {currentYear} Curry Grill. Tous droits réservés.
           </p>
           <div className="footer-bottom-links">
-            <a href="#">Privacy Policy</a>
+            <a href="#">Politique de confidentialité</a>
             <span className="divider">|</span>
-            <a href="#">Terms of Service</a>
+            <a href="#">Conditions d'utilisation</a>
             <span className="divider">|</span>
             <a href="#">Cookies</a>
           </div>
           <p className="credit">
-            Made with <FontAwesomeIcon icon={faHeart} /> by Bellanix Tech
+            Fait avec <FontAwesomeIcon icon={faHeart} /> par Bellanix Tech
           </p>
         </div>
       </div>

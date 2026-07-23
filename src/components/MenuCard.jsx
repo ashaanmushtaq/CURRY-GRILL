@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './MenuCard.css';
 import { imageMap } from '../data/menuData';
 
 const MenuCard = ({ category, icon, onClick }) => {
   const [imageError, setImageError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
+  
   const categoryImage = imageMap[category];
+
+  // ===== SCROLL REVEAL ANIMATION =====
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -30px 0px' }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div 
-      className={`menu-card ${isHovered ? 'hovered' : ''}`}
+      ref={cardRef}
+      className={`menu-card ${isHovered ? 'hovered' : ''} ${isVisible ? 'visible' : ''}`}
       onClick={onClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -53,7 +76,7 @@ const MenuCard = ({ category, icon, onClick }) => {
         {/* Category Info */}
         <div className="card-info">
           <h3 className="category-name">{category}</h3>
-          <span className="category-sub">tap to explore</span>
+          <span className="category-sub">Appuyez pour explorer</span>
         </div>
         
         {/* Arrow Indicator */}
