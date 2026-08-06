@@ -743,7 +743,7 @@
   .card-image-section { width: 44px; height: 44px; border-radius: 12px; }
   .card-category-name { font-size: 0.85rem; }
   .card-arrow-box { font-size: 0.75rem; }
-  .category-banner { height: 140px; border-radius: 14px; }
+  .category-banner { height: 150px; max-width: 100%; border-radius: 14px; }
   .category-banner-title { font-size: 1.2rem; }
   .category-banner-total { font-size: 0.75rem; }
   .item-row { padding: 10px 12px; }

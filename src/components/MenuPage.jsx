@@ -32,20 +32,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // ========== MAIN MENU IMAGES ==========
-import raitasImg from '../assets/Raita.png';
+import raitasImg from '../assets/Raita.avif';
 import samoussaImg from '../assets/Samosa.png';
-import chickenImg from '../assets/chiken.png';
-import naanImg from '../assets/naan.png';
-import beefImg from '../assets/beef.png';
-import lambImg from '../assets/lamb.png';
-import fishImg from '../assets/fish.png';
+import chickenImg from '../assets/Chiken.avif';
+import naanImg from '../assets/Naan.avif';
+import beefImg from '../assets/Beef.avif';
+import lambImg from '../assets/Lamb.avif';
+import fishImg from '../assets/Fish.avif';
 import vegetablesImg from '../assets/vigitables.png';
-import biryaniImg from '../assets/baryani.png';
-import riceImg from '../assets/riz.png';
-import lassiImg from '../assets/lissi.png';
-import kheerImg from '../assets/kheer.png';
-import halwaImg from '../assets/halva.png';
-import mangoImg from '../assets/ango mouse.png';
+import biryaniImg from '../assets/Baryani.avif';
+import riceImg from '../assets/Rise.avif';
+import lassiImg from '../assets/Lassi.avif';
+import kheerImg from '../assets/Kheer.avif';
+import halwaImg from '../assets/Halwa.avif';
+import mangoImg from '../assets/Mango mouse.avif';
 import lunchImg from '../assets/Lunch/big Bowl.png';
 
 // ========== IMAGE MAPPING ==========

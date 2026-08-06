@@ -1,18 +1,18 @@
 // ========== IMAGE IMPORTS ==========
-import raitasImg from '../assets/Raita.png';
+import raitasImg from '../assets/Raita.avif';
 import samoussaImg from '../assets/Samosa.png';
-import chickenImg from '../assets/chiken.png';
-import naanImg from '../assets/naan.png';
-import beefImg from '../assets/beef.png';
-import lambImg from '../assets/lamb.png';
-import fishImg from '../assets/fish.png';
+import chickenImg from '../assets/Chiken.avif';
+import naanImg from '../assets/Naan.avif';
+import beefImg from '../assets/Beef.avif';
+import lambImg from '../assets/Lamb.avif';
+import fishImg from '../assets/Fish.avif';
 import vegetablesImg from '../assets/vigitables.png';
-import biryaniImg from '../assets/baryani.png';
-import riceImg from '../assets/riz.png';
-import lassiImg from '../assets/lissi.png';
-import kheerImg from '../assets/kheer.png';
-import halwaImg from '../assets/halva.png';
-import mangoImg from '../assets/ango mouse.png';
+import biryaniImg from '../assets/Baryani.avif';
+import riceImg from '../assets/Rise.avif';
+import lassiImg from '../assets/Lassi.avif';
+import kheerImg from '../assets/Kheer.avif';
+import halwaImg from '../assets/Halwa.avif';
+import mangoImg from '../assets/Mango mouse.avif';
 import lunchImg from '../assets/Lunch/big Bowl.png';
 
 // ========== FULL MENU DATA - FRENCH ==========
@@ -42,8 +42,9 @@ export const fullMenuData = {
   "Pains Indiens": [
     { name: "NAAN FROMAGE", desc: "Pain fourré au fromage fondant (non piquant)", price: "4,50 €" },
     { name: "NAAN NATURE", desc: "Pain à pâte levée farine de froment", price: "3,50 €" },
+    { name: "NAAN KASHMIRI", desc: "Pain à pâte levée aux fruits secs, noix de cajou, coco", price: "5,00 €" },
     { name: "CHAPPATI", desc: "Pain à farine complète", price: "3,50 €" },
-    { name: "NAAN BEURRE", desc: "Pain fourré au beurre", price: "3,50 €" },
+    { name: "NAAN BUTTER", desc: "Pain fourré au beurre", price: "3,50 €" },
     { name: "NAAN AIL CORIANDRE", desc: "Pain à l'ail et à la coriandre", price: "4,50 €" },
     { name: "NAAN AIL FROMAGE", desc: "Pain à l'ail et au fromage fondant", price: "5,00 €" },
     { name: "NAAN KEEMA", desc: "Pain fourré à la viande hachée de bœuf", price: "6,50 €" }

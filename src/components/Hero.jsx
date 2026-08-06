@@ -1,230 +1,301 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
 
-// ===== FONT AWESOME IMPORTS =====
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUtensils, faArrowRight, faStar } from '@fortawesome/free-solid-svg-icons';
+const dynamicHeadings = [
+  { line1: "L'Art de La", highlight: "Cuisine", line3: "Authentique" },
+  { line1: "L'Excellence des", highlight: "Saveurs", line3: "Ancestrales" },
+  { line1: "Une Expérience", highlight: "Gastronomique", line3: "Unique" }
+];
 
 const Hero = ({ onMenuClick }) => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [displayText, setDisplayText] = useState('');
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [showContent, setShowContent] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [headingIndex, setHeadingIndex] = useState(0);
+  const [fade, setFade] = useState(true);
   const [counters, setCounters] = useState({ years: 0, dishes: 0, customers: 0 });
-  const [showStats, setShowStats] = useState(false);
-  const heroRef = useRef(null);
   
-  const fullText = "Bienvenue au Curry Grill";
-  const typingSpeed = 50;
+  // Dynamic Scroll In-View Tracking for every re-trigger
+  const [isHeroVisible, setIsHeroVisible] = useState(false);
+  const heroRef = useRef(null);
 
-  // ===== TYPEWRITER EFFECT FOR TITLE =====
+  // ===== AUTO HEADING ROTATION =====
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index < fullText.length) {
-        setDisplayText(fullText.substring(0, index + 1));
-        index++;
-      } else {
-        clearInterval(timer);
-        setIsTypingComplete(true);
-        setTimeout(() => setShowContent(true), 200);
-      }
-    }, typingSpeed);
+    const headingInterval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setHeadingIndex((prev) => (prev + 1) % dynamicHeadings.length);
+        setFade(true);
+      }, 400);
+    }, 4000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(headingInterval);
   }, []);
 
-  // ===== COUNTER ANIMATION FOR NUMBERS =====
-  useEffect(() => {
-    if (showStats) {
-      const duration = 2000;
-      const steps = 60;
-      const interval = duration / steps;
-      
-      const targets = { years: 15, dishes: 50, customers: 1000 };
-      let currentStep = 0;
-
-      const timer = setInterval(() => {
-        currentStep++;
-        const progress = currentStep / steps;
-        const eased = 1 - Math.pow(1 - progress, 3);
-        
-        setCounters({
-          years: Math.round(eased * targets.years),
-          dishes: Math.round(eased * targets.dishes),
-          customers: Math.round(eased * targets.customers)
-        });
-
-        if (currentStep >= steps) {
-          setCounters({
-            years: targets.years,
-            dishes: targets.dishes,
-            customers: targets.customers
-          });
-          clearInterval(timer);
-        }
-      }, interval);
-
-      return () => clearInterval(timer);
-    }
-  }, [showStats]);
-
-  // ===== SCROLL OBSERVER FOR STATS =====
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShowStats(true);
-        } else {
-          setShowStats(false);
-          setCounters({ years: 0, dishes: 0, customers: 0 });
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    const currentHero = heroRef.current;
-    if (currentHero) {
-      observer.observe(currentHero);
-    }
-
-    return () => {
-      if (currentHero) {
-        observer.unobserve(currentHero);
-      }
-    };
-  }, []);
-
-  // ===== 3D MOUSE TRACKING =====
+  // ===== 3D MOUSE PARALLAX =====
   useEffect(() => {
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      setMousePosition({ x, y });
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth - 0.5) * 30;
+      const y = (e.clientY / innerHeight - 0.5) * 30;
+      setMousePos({ x, y });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // ===== EVERY-TIME SCROLL RE-TRIGGER OBSERVER =====
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsHeroVisible(true);
+        } else {
+          // Screen se baahar jaate hi reset kardo taaki har baar scroll par animate ho
+          setIsHeroVisible(false);
+          setCounters({ years: 0, dishes: 0, customers: 0 });
+        }
+      },
+      { threshold: 0.2 } // 20% visible hotay hi triggering shuru
+    );
+
+    const currentRef = heroRef.current;
+    if (currentRef) observer.observe(currentRef);
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, []);
+
+  // ===== 3D NUMERIC COUNTER ANIMATION =====
+  useEffect(() => {
+    if (!isHeroVisible) return;
+    
+    const duration = 2200;
+    const steps = 60;
+    const interval = duration / steps;
+    const targets = { years: 15, dishes: 50, customers: 1000 };
+    let step = 0;
+
+    const timer = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      const ease = 1 - Math.pow(1 - progress, 4);
+
+      setCounters({
+        years: Math.round(ease * targets.years),
+        dishes: Math.round(ease * targets.dishes),
+        customers: Math.round(ease * targets.customers)
+      });
+
+      if (step >= steps) clearInterval(timer);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [isHeroVisible]);
+
+  const currentHeading = dynamicHeadings[headingIndex];
+
   return (
-    <section className="hero-3d" ref={heroRef}>
-      {/* ===== 3D ANIMATED BACKGROUND ===== */}
-      <div className="hero-bg-3d">
-        <div className="bg-layer layer-1"></div>
-        <div className="bg-layer layer-2"></div>
-        <div className="bg-layer layer-3"></div>
+    <section 
+      ref={heroRef} 
+      className={`lux-hero-section ${isHeroVisible ? 'in-view' : 'out-of-view'}`}
+    >
+      {/* 3D ATMOSPHERE & CYBER GRID */}
+      <div className="lux-bg-container">
+        <div className="cyber-3d-grid-floor"></div>
+        <div 
+          className="lux-bg-image"
+          style={{
+            transform: `scale(1.1) translate3d(${mousePos.x * -0.5}px, ${mousePos.y * -0.5}px, 0)`
+          }}
+        ></div>
+        <div className="lux-bg-vignette"></div>
+        <div className="lux-bg-glow glow-1"></div>
+        <div className="lux-bg-glow glow-2"></div>
       </div>
 
-      {/* ===== FLOATING PARTICLES ===== */}
-      <div className="hero-particles">
-        {[...Array(40)].map((_, i) => (
+      {/* KINETIC SCROLL WATERMARK */}
+      <div className="lux-watermark-text anim-element delay-1">
+        <span style={{ transform: `translateX(${mousePos.x * 2.5}px)` }}>
+          CURRY GRILL • FINE DINING • PAKISTANI & INDIAN GASTRONOMY •
+        </span>
+      </div>
+
+      {/* MAIN CONTENT GRID */}
+      <div className="lux-hero-wrapper">
+        
+        {/* LEFT SIDE: TEXT CONTENT WITH STAGGERED SCROLL ANIMATIONS */}
+        <div className="lux-col-left">
+          
+          {/* BADGE */}
+          <div className="lux-badge cyber-glass-badge anim-element delay-1">
+            <span className="badge-pulse-dot"></span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+            </svg>
+            <span>Haute Gastronomie Indienne & Pakistanaise</span>
+          </div>
+
+          {/* HEADING */}
+          <h1 className={`lux-main-heading anim-element delay-2 ${fade ? 'fade-in' : 'fade-out'}`}>
+            <span className="line-1">{currentHeading.line1}</span>
+            <span className="line-2 highlight-amber">{currentHeading.highlight}</span>
+            <span className="line-3">{currentHeading.line3}</span>
+          </h1>
+
+          {/* DESCRIPTION */}
+          <div className="lux-desc-box anim-element delay-3">
+            <div className="desc-accent-bar"></div>
+            <p className="lux-description">
+              Plongez au cœur d'une expérience culinaire d'exception. 
+              <strong> Curry Grill</strong> réunit la richesse des épices pakistanaises 
+              et le raffinement des traditions indiennes dans un cadre prestigieux.
+            </p>
+          </div>
+
+          {/* BUTTON & RATING */}
+          <div className="lux-action-group anim-element delay-4">
+            <button className="btn-amber-glow" onClick={onMenuClick}>
+              <span>EXPLORER LE MENU</span>
+              <div className="btn-icon-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </div>
+            </button>
+
+            <div className="lux-rating-pill">
+              <div className="stars">
+                {"★★★★★".split("").map((star, idx) => (
+                  <span key={idx}>{star}</span>
+                ))}
+              </div>
+              <span className="rating-text">4.9 / 5.0 (500+ Avis)</span>
+            </div>
+          </div>
+
+          {/* 3D COUNTERS */}
+          <div className="lux-stats-container">
+            <div className="stat-block-3d anim-element delay-5">
+              <div className="stat-glow-bg"></div>
+              <div className="stat-card-inner">
+                <span className="stat-num-3d">{counters.years}<em className="glow-plus">+</em></span>
+                <span className="stat-lbl">Ans d'Excellence</span>
+              </div>
+            </div>
+
+            <div className="stat-block-3d anim-element delay-6">
+              <div className="stat-glow-bg"></div>
+              <div className="stat-card-inner">
+                <span className="stat-num-3d">{counters.dishes}<em className="glow-plus">+</em></span>
+                <span className="stat-lbl">Plats Signature</span>
+              </div>
+            </div>
+
+            <div className="stat-block-3d anim-element delay-7">
+              <div className="stat-glow-bg"></div>
+              <div className="stat-card-inner">
+                <span className="stat-num-3d">{counters.customers.toLocaleString()}<em className="glow-plus">+</em></span>
+                <span className="stat-lbl">Clients Satisfaits</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* RIGHT SIDE: 3D STAGE STAGGERED SCROLL ANIMATION */}
+        <div className="lux-col-right anim-element delay-3">
+          
+          <div className="cyber-holo-ring ring-1"></div>
+          <div className="cyber-holo-ring ring-2"></div>
+          <div className="cyber-laser-beam"></div>
+
           <div 
-            key={i} 
-            className="particle"
+            className="image-composition-frame-3d"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${10 + Math.random() * 20}s`,
-              width: `${2 + Math.random() * 4}px`,
-              height: `${2 + Math.random() * 4}px`
+              transform: `perspective(1000px) rotateY(${mousePos.x * 0.8}deg) rotateX(${-mousePos.y * 0.8}deg)`
             }}
-          ></div>
-        ))}
-      </div>
-
-      {/* ===== FLOATING FOOD ICONS ===== */}
-      <div className="floating-icons">
-        <span className="float-icon" style={{ top: '10%', left: '5%', animationDelay: '0s' }}>🍛</span>
-        <span className="float-icon" style={{ top: '15%', right: '8%', animationDelay: '2s' }}>🥘</span>
-        <span className="float-icon" style={{ bottom: '20%', left: '10%', animationDelay: '4s' }}>🍗</span>
-        <span className="float-icon" style={{ bottom: '25%', right: '5%', animationDelay: '1s' }}>🍚</span>
-        <span className="float-icon" style={{ top: '50%', left: '2%', animationDelay: '3s' }}>🌶️</span>
-        <span className="float-icon" style={{ top: '45%', right: '2%', animationDelay: '5s' }}>🧄</span>
-      </div>
-
-      {/* ===== 3D GLOW ORBS ===== */}
-      <div className="glow-orbs">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-      </div>
-
-      {/* ===== MAIN CONTENT ===== */}
-      <div 
-        className="hero-content-3d"
-        style={{
-          transform: `rotateX(${mousePosition.y * 2}deg) rotateY(${mousePosition.x * 2}deg) translateZ(30px)`
-        }}
-      >
-        {/* Badge */}
-        <div className="hero-badge">
-          <FontAwesomeIcon icon={faStar} />
-          <span>Cuisine Indienne & Pakistanaise</span>
-          <FontAwesomeIcon icon={faStar} />
-        </div>
-
-        {/* Main Title with Typewriter */}
-        <h1 className="hero-title">
-          <span className="title-line-left"></span>
-          <span className="title-text">
-            {displayText}
-            <span className={`cursor ${isTypingComplete ? 'blink' : ''}`}>|</span>
-          </span>
-          <span className="title-line-right"></span>
-        </h1>
-
-        {/* Subtitle */}
-        <div className="hero-subtitle-wrapper">
-          <div className="quote-mark quote-left">"</div>
-          <p className={`hero-description ${showContent ? 'visible' : ''}`}>
-            <span className="accent-3d">"La force de Curry Grill ?"</span> 
-            Un menu unique réunissant les saveurs authentiques 
-            des cuisines pakistanaise et indienne en un seul endroit.
-          </p>
-          <div className="quote-mark quote-right">"</div>
-        </div>
-
-        {/* Stats with Counter Animation */}
-        <div className={`hero-stats ${showContent ? 'visible' : ''}`}>
-          <div className="stat-item">
-            <span className="stat-number">{counters.years}+</span>
-            <span className="stat-label">Ans d'excellence</span>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-number">{counters.dishes}+</span>
-            <span className="stat-label">Plats authentiques</span>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <span className="stat-number">{counters.customers}+</span>
-            <span className="stat-label">Clients satisfaits</span>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className={`hero-actions ${showContent ? 'visible' : ''}`}>
-          <button 
-            className="hero-btn-3d" 
-            onClick={onMenuClick}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
           >
-            <FontAwesomeIcon icon={faUtensils} />
-            Voir le Menu
-            <FontAwesomeIcon icon={faArrowRight} className={`btn-arrow ${isHovered ? 'active' : ''}`} />
-          </button>
+            {/* MAIN DISH CARD */}
+            <div className="main-dish-card-3d">
+              <div className="card-scanline"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1000&auto=format&fit=crop" 
+                alt="Signature Curry Dish" 
+                className="dish-img"
+              />
+              <div className="card-glass-overlay-3d">
+                <div className="dish-info">
+                  <span className="dish-tag">PLAT VEDETTE</span>
+                  <h3>Chicken Tikka Masala Supreme</h3>
+                  <p>Mijoté selon nos recettes ancestrales</p>
+                </div>
+              </div>
+              <div className="hud-corner hud-tl"></div>
+              <div className="hud-corner hud-tr"></div>
+              <div className="hud-corner hud-bl"></div>
+              <div className="hud-corner hud-br"></div>
+            </div>
+
+            {/* FLOATING CARD 1 */}
+            <div 
+              className="floating-accent-card-3d anim-element delay-5"
+              style={{
+                transform: `translate3d(${mousePos.x * -1}px, ${mousePos.y * -1}px, 80px)`
+              }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=600&auto=format&fit=crop" 
+                alt="Special Naan Grill" 
+              />
+              <div className="accent-card-details">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#F5A623">
+                  <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.46 3.91 3.45 4.38L6 22h2l.55-8.62C10.54 12.91 12 11.12 12 9V2h-1v7zm7-7v20h2V2h-2z"/>
+                </svg>
+                <div>
+                  <strong>Grillades au Tandoor</strong>
+                  <span>Cuisiné au feu de bois</span>
+                </div>
+              </div>
+            </div>
+
+            {/* FLOATING BADGE 2 */}
+            <div 
+              className="floating-time-badge-3d anim-element delay-6"
+              style={{
+                transform: `translate3d(${mousePos.x * 0.7}px, ${mousePos.y * 0.7}px, 50px)`
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <div>
+                <strong>Ouvert 7j/7</strong>
+                <span>12h00 - 23h30</span>
+              </div>
+            </div>
+
+          </div>
         </div>
+
       </div>
 
-      {/* ===== BOTTOM DECORATION ===== */}
-      <div className="hero-bottom-decoration">
-        <span></span>
-        <span></span>
-        <span></span>
+      {/* FOOTER BAR */}
+      <div className="lux-bottom-bar anim-element delay-8">
+        <div className="bar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#F5A623">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          <span>Une ambiance raffinée et chaleureuse</span>
+        </div>
+        <div className="bar-line"></div>
+        <div className="bar-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#F5A623">
+            <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99z"/>
+          </svg>
+          <span>Produits Frais & Épices Sélectionnées</span>
+        </div>
       </div>
     </section>
   );

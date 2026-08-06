@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Features.css';
 
 const Features = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const cardRefs = useRef([]);
 
-  // ===== SCROLL REVEAL =====
+  // ===== ULTRA-FAST INTERSECTION OBSERVER =====
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-active');
+          }
+        });
       },
       { threshold: 0.1 }
     );
@@ -23,6 +24,50 @@ const Features = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  // ===== 120 FPS HARDWARE ACCELERATED TILT (NO REACT STATE) =====
+  const applyTilt = (card, clientX, clientY) => {
+    if (!card) return;
+
+    // Use requestAnimationFrame for hardware-synced smooth movement
+    window.requestAnimationFrame(() => {
+      const rect = card.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+
+      // Calculate percentage coordinates (-1 to 1)
+      const percentX = (x / rect.width - 0.5) * 2;
+      const percentY = (y / rect.height - 0.5) * 2;
+
+      // Direct CSS Variables update (Bypasses React Re-renders completely)
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+      card.style.setProperty('--rot-x', `${-percentY * 12}deg`);
+      card.style.setProperty('--rot-y', `${percentX * 12}deg`);
+      card.style.setProperty('--card-scale', `1.03`);
+    });
+  };
+
+  const handleMouseMove = (e, index) => {
+    applyTilt(cardRefs.current[index], e.clientX, e.clientY);
+  };
+
+  const handleTouchMove = (e, index) => {
+    if (e.touches && e.touches[0]) {
+      applyTilt(cardRefs.current[index], e.touches[0].clientX, e.touches[0].clientY);
+    }
+  };
+
+  const handleReset = (index) => {
+    const card = cardRefs.current[index];
+    if (!card) return;
+
+    window.requestAnimationFrame(() => {
+      card.style.setProperty('--rot-x', `0deg`);
+      card.style.setProperty('--rot-y', `0deg`);
+      card.style.setProperty('--card-scale', `1`);
+    });
+  };
 
   const features = [
     {
@@ -69,34 +114,37 @@ const Features = () => {
     <div className="features-section" ref={sectionRef}>
       <div className="features-bg-glow"></div>
       
-      <h2 className="features-title">
-        <span className="title-line"></span>
+      <h2 className="features-title reveal-item">
+        <span className="title-line left"></span>
         Pourquoi Nous Choisir
-        <span className="title-line"></span>
+        <span className="title-line right"></span>
       </h2>
       
-      <p className="features-subtitle">
+      <p className="features-subtitle reveal-item">
         <i className="fa-solid fa-sparkles"></i>
         Découvrez la différence avec notre qualité premium
         <i className="fa-solid fa-sparkles"></i>
       </p>
 
-      <div className={`features-grid ${isVisible ? 'visible' : ''}`}>
+      <div className="features-grid">
         {features.map((feature, index) => (
           <div
             key={index}
-            className={`feature-box-3d ${hoveredIndex === index ? 'hovered' : ''}`}
+            ref={(el) => (cardRefs.current[index] = el)}
+            className="feature-box-3d reveal-item"
             style={{
-              animationDelay: `${index * 0.2}s`,
               '--feature-color': feature.color,
-              '--feature-gradient': feature.gradient
+              '--feature-gradient': feature.gradient,
+              '--delay': `${index * 0.12}s`
             }}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
+            onMouseMove={(e) => handleMouseMove(e, index)}
+            onMouseLeave={() => handleReset(index)}
+            onTouchMove={(e) => handleTouchMove(e, index)}
+            onTouchEnd={() => handleReset(index)}
           >
+            {/* Dynamic GPU-accelerated spotlight */}
+            <div className="feature-spotlight"></div>
             <div className="feature-glass-bg"></div>
-            
-            {/* NEON BORDER */}
             <div className="feature-neon-border"></div>
             
             <div className="feature-particles">
@@ -107,7 +155,6 @@ const Features = () => {
               <span className="fp5"></span>
             </div>
 
-            {/* ===== ICON IN CIRCLE ===== */}
             <div className="feature-icon-wrapper">
               <div className="feature-icon-ring">
                 <div className="feature-icon-glow"></div>
