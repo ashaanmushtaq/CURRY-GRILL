@@ -271,8 +271,8 @@ const Hero = ({ onMenuClick }) => {
                 <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
               <div>
-                <strong>Ouvert 7j/7</strong>
-                <span>12h00 - 23h30</span>
+                <strong>12:00 - 14:30</strong>
+                <span>18:00 - 22:30</span>
               </div>
             </div>
 
