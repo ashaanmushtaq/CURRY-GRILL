@@ -6,7 +6,7 @@ import lunchBowlImg from '../assets/Lunch/large bowel.avif';
 import smallBowlImg from '../assets/Lunch/small bowel.avif';
 import naanSimpleImg from '../assets/Lunch/NF Curry.avif';
 import naanTenderImg from '../assets/Lunch/NF tender.avif';
-import naanSikhKebabImg from '../assets/Lunch/NF sekh kabab.avif';
+import naanSikhKebabImg from '../assets/Lunch/NF Sekh kabab.avif';
 import naanSteakImg from '../assets/Lunch/NF Fish.avif';
 
 // ===== FONT AWESOME IMPORTS =====
