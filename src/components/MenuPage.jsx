@@ -111,8 +111,9 @@ const fullMenuData = {
   "Pains Indiens": [
     { name: "NAAN FROMAGE", desc: "Pain fourré au fromage fondant (non piquant)", price: "4,50 €" },
     { name: "NAAN NATURE", desc: "Pain à pâte levée farine de froment", price: "3,50 €" },
+    { name: "NAAN KASHMIRI", desc: "Pain à pâte levée aux fruits secs, noix de cajou, coco", price: "5,00 €" },
     { name: "CHAPPATI", desc: "Pain à farine complète", price: "3,50 €" },
-    { name: "NAAN BEURRE", desc: "Pain fourré au beurre", price: "3,50 €" },
+    { name: "NAAN BUTTER", desc: "Pain fourré au beurre", price: "3,50 €" },
     { name: "NAAN AIL CORIANDRE", desc: "Pain à l'ail et à la coriandre", price: "4,50 €" },
     { name: "NAAN AIL FROMAGE", desc: "Pain à l'ail et au fromage fondant", price: "5,00 €" },
     { name: "NAAN KEEMA", desc: "Pain fourré à la viande hachée de bœuf", price: "6,50 €" }
