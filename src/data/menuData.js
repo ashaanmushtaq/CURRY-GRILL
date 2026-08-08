@@ -13,7 +13,7 @@ import lassiImg from '../assets/Lassi.avif';
 import kheerImg from '../assets/Kheer.avif';
 import halwaImg from '../assets/Halwa.avif';
 import mangoImg from '../assets/Mango mouse.avif';
-import lunchImg from '../assets/Lunch/big Bowl.png';
+import lunchImg from '../assets/Lunch/large bowel.avif';
 
 // ========== FULL MENU DATA - FRENCH ==========
 export const fullMenuData = {

@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import './MenuPage.css';
 
 // ===== LUNCH IMAGES =====
-import lunchBowlImg from '../assets/Lunch/big Bowl.png';
-import smallBowlImg from '../assets/Lunch/small Bowl.png';
-import naanSimpleImg from '../assets/Lunch/NAAN FROMAGE Simple.png';
-import naanTenderImg from '../assets/Lunch/NAAN FROMAGE Tender.png';
-import naanSikhKebabImg from '../assets/Lunch/NAAN FROMAGE Sikh Kabab.png';
-import naanSteakImg from '../assets/Lunch/NAAN FROMAGE Steak.png';
+import lunchBowlImg from '../assets/Lunch/large bowel.avif';
+import smallBowlImg from '../assets/Lunch/small bowel.avif';
+import naanSimpleImg from '../assets/Lunch/NF Curry.avif';
+import naanTenderImg from '../assets/Lunch/NF tender.avif';
+import naanSikhKebabImg from '../assets/Lunch/NF sekh kabab.avif';
+import naanSteakImg from '../assets/Lunch/NF Fish.avif';
 
 // ===== FONT AWESOME IMPORTS =====
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -46,7 +46,7 @@ import lassiImg from '../assets/Lassi.avif';
 import kheerImg from '../assets/Kheer.avif';
 import halwaImg from '../assets/Halwa.avif';
 import mangoImg from '../assets/Mango mouse.avif';
-import lunchImg from '../assets/Lunch/big Bowl.png';
+import lunchImg from '../assets/Lunch/large bowel.avif';
 
 // ========== IMAGE MAPPING ==========
 const categoryImages = {
