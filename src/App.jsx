@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { fullMenuData, iconMap } from './data/menuData';
 import Navbar from './components/Navbar';
@@ -22,6 +22,26 @@ function App() {
     setShowMenuPage(true);
   };
   const closeMenuPage = () => setShowMenuPage(false);
+
+  useEffect(() => {
+    // Handle direct deep links like /menu and /contact so client-side views open correctly
+    try {
+      const path = window.location && window.location.pathname ? window.location.pathname : '/';
+      if (path === '/menu' || path.startsWith('/menu')) {
+        setActiveMenuView('menu');
+        setShowMenuPage(true);
+      } else if (path === '/contact' || path.startsWith('/contact')) {
+        // scroll to the contact section which contains the Footer
+        const el = document.getElementById('contact');
+        if (el && typeof el.scrollIntoView === 'function') {
+          // use a small timeout to ensure layout is ready
+          setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 50);
+        }
+      }
+    } catch (e) {
+      // ignore in non-browser environments
+    }
+  }, []);
 
   return (
     <div className="app">
