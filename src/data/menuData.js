@@ -61,14 +61,14 @@ export const fullMenuData = {
     { name: "POULET MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "13,50 €" },
     { name: "POULET PALAK", desc: "Suprême de poulet aux épinards et coriandre fraîche", price: "14,50 €" }
   ],
-  "Plats de Bœuf": [
-    { name: "BŒUF KORMA", desc: "Bœuf sauce douce aux amandes, coco et noix de cajou", price: "14,50 €" },
-    { name: "BŒUF KRAI", desc: "Bœuf préparé avec tomate, gingembre, citron (moyen)", price: "14,00 €" },
-    { name: "BŒUF CURRY", desc: "Bœuf préparé avec une sauce douce au curry", price: "14,50 €" },
-    { name: "BŒUF MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "14,50 €" },
-    { name: "BŒUF VINDALOO", desc: "Bœuf sauce épicée (fort)", price: "15,00 €" },
-    { name: "BŒUF JALFRÉZI", desc: "Bœuf aux poivrons et épices", price: "15,00 €" },
-    { name: "BŒUF MASSALA", desc: "Sauce tomate, oignon, poivrons, gingembre, coriandre", price: "14,50 €" }
+  "Plats de Boeuf": [
+    { name: "BOEUF KORMA", desc: "Bœuf sauce douce aux amandes, coco et noix de cajou", price: "14,50 €" },
+    { name: "BOEUF KRAI", desc: "Bœuf préparé avec tomate, gingembre, citron (moyen)", price: "14,00 €" },
+    { name: "BOEUF CURRY", desc: "Bœuf préparé avec une sauce douce au curry", price: "14,50 €" },
+    { name: "BOEUF MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "14,50 €" },
+    { name: "BOEUF VINDALOO", desc: "Bœuf sauce épicée (fort)", price: "15,00 €" },
+    { name: "BOEUF JALFRÉZI", desc: "Bœuf aux poivrons et épices", price: "15,00 €" },
+    { name: "BOEUF MASSALA", desc: "Sauce tomate, oignon, poivrons, gingembre, coriandre", price: "14,50 €" }
   ],
   "Plats d'Agneau": [
     { name: "AGNEAU KORMA", desc: "Agneau aux amandes, coco et noix de cajou (doux)", price: "15,50 €" },
@@ -85,7 +85,7 @@ export const fullMenuData = {
     { name: "FISH TIKKA MASSALA", desc: "Saumon grillé sauce tomates, poivrons, gingembre", price: "18,00 €" },
     { name: "FISH KORMA", desc: "Saumon grillé aux noix de cajou, coco et crème", price: "18,00 €" },
     { name: "CREVETTES CURRY", desc: "Crevettes marinées oignon, tomate, gingembre, citron", price: "15,00 €" },
-    { name: "CREVETTES KORMA", desc: "Crevettes aux amandes, noix de cajou, coco (doux)", price: "16,50 €" }
+    { name: "CREVETTES KORMA", desc: "Crevettes dans une sauce douce, amandes, coco, noix de cajou avec crème (doux)", price: "16,50 €" }
   ],
   "Légumes": [
     { name: "DESI DAL", desc: "Lentilles indiennes maison relevées", price: "8,00 €" },
