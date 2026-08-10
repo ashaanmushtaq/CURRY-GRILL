@@ -35,6 +35,7 @@ import {
 import raitasImg from '../assets/Raita.avif';
 import samoussaImg from '../assets/Samosa.png';
 import chickenImg from '../assets/Chiken.avif';
+import kababImg from '../assets/kabab.avif';
 import naanImg from '../assets/Naan.avif';
 import beefImg from '../assets/Beef.avif';
 import lambImg from '../assets/Lamb.avif';
@@ -52,7 +53,7 @@ import lunchImg from '../assets/Lunch/large bowel.avif';
 const categoryImages = {
   "Entrées Froides": raitasImg,
   "Samossas & Pakora": samoussaImg,
-  "Grillades Tandoori": chickenImg,
+  "Grillades Tandoori": kababImg,
   "Pains Indiens": naanImg,
   "Plats de Poulet": chickenImg,
   "Plats de Bœuf": beefImg,
