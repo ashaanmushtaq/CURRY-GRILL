@@ -211,7 +211,7 @@ const menuMidiData = [
       { name: 'NAAN FROMAGE SEEKH KEBAB', price: '9,90 €', image: naanSikhKebabImg },
       { name: 'NAAN FROMAGE FISH (STEAK POISSON)', price: '9,90 €', image: naanSteakImg }
     ],
-    note: 'Sans Boisson Et Frites : 8,00 € Par Sandwich'
+    note: 'Sans Boisson Et Frites : 8,50 € Par Sandwich'
   },
   {
     title: 'NOS BOWL',
