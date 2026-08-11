@@ -7,7 +7,7 @@ import naanImg from '../assets/Naan.avif';
 import beefImg from '../assets/Beef.avif';
 import lambImg from '../assets/Lamb.avif';
 import fishImg from '../assets/Fish.avif';
-import vegetablesImg from '../assets/vigitables.png';
+import vegetablesImg from '../assets/legam.avif';
 import biryaniImg from '../assets/Baryani.avif';
 import riceImg from '../assets/Rise.avif';
 import lassiImg from '../assets/Lassi.avif';

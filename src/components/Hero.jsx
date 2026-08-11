@@ -27,8 +27,8 @@ const Hero = ({ onMenuClick }) => {
       setTimeout(() => {
         setHeadingIndex((prev) => (prev + 1) % dynamicHeadings.length);
         setFade(true);
-      }, 400);
-    }, 4000);
+      }, 280);
+    }, 3600);
 
     return () => clearInterval(headingInterval);
   }, []);
@@ -37,8 +37,9 @@ const Hero = ({ onMenuClick }) => {
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouchDevice = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+    const isSmallViewport = window.innerWidth < 900;
 
-    if (prefersReducedMotion || isTouchDevice || window.innerWidth < 768) {
+    if (prefersReducedMotion || isTouchDevice || isSmallViewport) {
       setMotionEnabled(false);
       return;
     }
@@ -243,6 +244,7 @@ const Hero = ({ onMenuClick }) => {
                 alt="Restaurant indoor seating and ambiance" 
                 className="dish-img"
                 decoding="async"
+                loading="lazy"
               />
               <div className="card-glass-overlay-3d">
                 <div className="dish-info">
@@ -267,6 +269,8 @@ const Hero = ({ onMenuClick }) => {
               <img 
                 src={kababImg} 
                 alt="Kabab special" 
+                loading="lazy"
+                decoding="async"
               />
               <div className="accent-card-details">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#F5A623">

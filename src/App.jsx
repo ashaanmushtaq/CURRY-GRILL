@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import './App.css';
 import { fullMenuData, iconMap } from './data/menuData';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import MenuGrid from './components/MenuGrid';
-import Features from './components/Features';
-import Footer from './components/Footer';
-import CategoryModal from './components/CategoryModal';
-import MenuPage from './components/MenuPage';
+
+const Features = lazy(() => import('./components/Features'));
+const Footer = lazy(() => import('./components/Footer'));
+const CategoryModal = lazy(() => import('./components/CategoryModal'));
+const MenuPage = lazy(() => import('./components/MenuPage'));
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -60,24 +61,32 @@ function App() {
       </section>
       
       <section id="menu-midi">
-        <Features />
+        <Suspense fallback={<div className="loading-fallback">Chargement en cours…</div>}>
+          <Features />
+        </Suspense>
       </section>
       
       <section id="contact">
-        <Footer />
+        <Suspense fallback={<div className="loading-fallback">Chargement en cours…</div>}>
+          <Footer />
+        </Suspense>
       </section>
       
       {selectedCategory && (
-        <CategoryModal 
-          category={selectedCategory} 
-          items={fullMenuData[selectedCategory]} 
-          icon={iconMap[selectedCategory]}
-          onClose={closeModal} 
-        />
+        <Suspense fallback={<div className="loading-fallback">Chargement du menu…</div>}>
+          <CategoryModal 
+            category={selectedCategory} 
+            items={fullMenuData[selectedCategory]} 
+            icon={iconMap[selectedCategory]}
+            onClose={closeModal} 
+          />
+        </Suspense>
       )}
       
       {showMenuPage && (
-        <MenuPage onClose={closeMenuPage} view={activeMenuView} />
+        <Suspense fallback={<div className="loading-fallback">Chargement du menu…</div>}>
+          <MenuPage onClose={closeMenuPage} view={activeMenuView} />
+        </Suspense>
       )}
     </div>
   );
