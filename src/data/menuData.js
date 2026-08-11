@@ -1,6 +1,6 @@
 // ========== IMAGE IMPORTS ==========
 import raitasImg from '../assets/Raita.avif';
-import samoussaImg from '../assets/Samosa.png';
+import samoussaImg from '../assets/Samosa.avif';
 import chickenImg from '../assets/Chiken.avif';
 import kababImg from '../assets/kabab.avif';
 import naanImg from '../assets/Naan.avif';
@@ -25,7 +25,7 @@ export const fullMenuData = {
   ],
   "Samossas & Pakora": [
     { name: "SAMOUSSA LÉGUMES", desc: "Beignets fourrés aux légumes épicés", price: "6,00 €" },
-    { name: "SAMOUSSA VIANDE", desc: "Beignets fourrés à la viande hachée de bœuf", price: "6,50 €" },
+    { name: "SAMOUSSA VIANDE", desc: "Beignets fourrés à la viande hachée de boeuf", price: "6,50 €" },
     { name: "OIGNON BHAJA", desc: "Beignets d'oignons aux épices", price: "6,00 €" },
     { name: "CHICKEN PAKORA", desc: "Beignets de poulet marinés aux épices", price: "6,00 €" },
     { name: "AUBERGINE PAKORA", desc: "Beignets d'aubergines et pomme de terre", price: "5,50 €" },
@@ -48,7 +48,7 @@ export const fullMenuData = {
     { name: "NAAN BUTTER", desc: "Pain fourré au beurre", price: "3,50 €" },
     { name: "NAAN AIL CORIANDRE", desc: "Pain à l'ail et à la coriandre", price: "4,50 €" },
     { name: "NAAN AIL FROMAGE", desc: "Pain à l'ail et au fromage fondant", price: "5,00 €" },
-    { name: "NAAN KEEMA", desc: "Pain fourré à la viande hachée de bœuf", price: "6,50 €" }
+    { name: "NAAN KEEMA", desc: "Pain fourré à la viande hachée de boeuf", price: "6,50 €" }
   ],
   "Plats de Poulet": [
     { name: "POULET TIKKA PALAK", desc: "Suprême de poulet mariné et grillé, épinards frais", price: "16,50 €" },
@@ -62,12 +62,12 @@ export const fullMenuData = {
     { name: "POULET PALAK", desc: "Suprême de poulet aux épinards et coriandre fraîche", price: "14,50 €" }
   ],
   "Plats de Boeuf": [
-    { name: "BOEUF KORMA", desc: "Bœuf sauce douce aux amandes, coco et noix de cajou", price: "14,50 €" },
-    { name: "BOEUF KRAI", desc: "Bœuf préparé avec tomate, gingembre, citron (moyen)", price: "14,00 €" },
-    { name: "BOEUF CURRY", desc: "Bœuf préparé avec une sauce douce au curry", price: "14,50 €" },
+    { name: "BOEUF KORMA", desc: "boeuf sauce douce aux amandes, coco et noix de cajou", price: "14,50 €" },
+    { name: "BOEUF KRAI", desc: "boeuf préparé avec tomate, gingembre, citron (moyen)", price: "14,00 €" },
+    { name: "BOEUF CURRY", desc: "boeuf préparé avec une sauce douce au curry", price: "14,50 €" },
     { name: "BOEUF MADRAS", desc: "Plat du sud de l'Inde assez relevé", price: "14,50 €" },
-    { name: "BOEUF VINDALOO", desc: "Bœuf sauce épicée (fort)", price: "15,00 €" },
-    { name: "BOEUF JALFRÉZI", desc: "Bœuf aux poivrons et épices", price: "15,00 €" },
+    { name: "BOEUF VINDALOO", desc: "boeuf sauce épicée (fort)", price: "15,00 €" },
+    { name: "BOEUF JALFRÉZI", desc: "boeuf aux poivrons et épices", price: "15,00 €" },
     { name: "BOEUF MASSALA", desc: "Sauce tomate, oignon, poivrons, gingembre, coriandre", price: "14,50 €" }
   ],
   "Plats d'Agneau": [
@@ -99,7 +99,7 @@ export const fullMenuData = {
     { name: "BIRYANI POULET", desc: "Riz basmati aux blancs de poulet, amandes, safran", price: "17,00 €" },
     { name: "BIRYANI AGNEAU", desc: "Riz basmati à l'agneau, amandes, citron, safran", price: "18,50 €" },
     { name: "BIRYANI CREVETTES", desc: "Riz basmati aux crevettes, amandes, safran", price: "18,50 €" },
-    { name: "BIRYANI BŒUF", desc: "Riz basmati au bœuf, amandes, citron, safran", price: "17,50 €" },
+    { name: "BIRYANI boeuf", desc: "Riz basmati au boeuf, amandes, citron, safran", price: "17,50 €" },
     { name: "BIRYANI POISSON", desc: "Riz basmati au poisson grillé, amandes, safran", price: "19,50 €" }
   ],
   "Plats de Riz": [
@@ -132,7 +132,7 @@ export const iconMap = {
   "Grillades Tandoori": "fa-solid fa-fire",
   "Pains Indiens": "fa-solid fa-bread-slice",
   "Plats de Poulet": "fa-solid fa-drumstick-bite",
-  "Plats de Bœuf": "fa-solid fa-cow",
+  "Plats de Boeuf": "fa-solid fa-cow",
   "Plats d'Agneau": "fa-solid fa-drumstick-bite",
   "Poissons & Crevettes": "fa-solid fa-fish",
   "Légumes": "fa-solid fa-leaf",
@@ -149,7 +149,7 @@ export const imageMap = {
   "Grillades Tandoori": kababImg,
   "Pains Indiens": naanImg,
   "Plats de Poulet": chickenImg,
-  "Plats de Bœuf": beefImg,
+  "Plats de Boeuf": beefImg,
   "Plats d'Agneau": lambImg,
   "Poissons & Crevettes": fishImg,
   "Légumes": vegetablesImg,

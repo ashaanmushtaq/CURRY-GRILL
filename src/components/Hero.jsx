@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
+import doorImg from '../assets/door.avif';
+import kababImg from '../assets/kabab.avif';
 
 const dynamicHeadings = [
   { line1: "L'Art de La", highlight: "Cuisine", line3: "Authentique" },
@@ -12,6 +14,7 @@ const Hero = ({ onMenuClick }) => {
   const [headingIndex, setHeadingIndex] = useState(0);
   const [fade, setFade] = useState(true);
   const [counters, setCounters] = useState({ years: 0, dishes: 0, customers: 0 });
+  const [motionEnabled, setMotionEnabled] = useState(true);
   
   // Dynamic Scroll In-View Tracking for every re-trigger
   const [isHeroVisible, setIsHeroVisible] = useState(false);
@@ -32,16 +35,32 @@ const Hero = ({ onMenuClick }) => {
 
   // ===== 3D MOUSE PARALLAX =====
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchDevice = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+
+    if (prefersReducedMotion || isTouchDevice || window.innerWidth < 768) {
+      setMotionEnabled(false);
+      return;
+    }
+
+    let frameId = null;
     const handleMouseMove = (e) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX / innerWidth - 0.5) * 30;
-      const y = (e.clientY / innerHeight - 0.5) * 30;
-      setMousePos({ x, y });
+      if (!motionEnabled || frameId) return;
+      frameId = requestAnimationFrame(() => {
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX / innerWidth - 0.5) * 30;
+        const y = (e.clientY / innerHeight - 0.5) * 30;
+        setMousePos({ x, y });
+        frameId = null;
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }, [motionEnabled]);
 
   // ===== EVERY-TIME SCROLL RE-TRIGGER OBSERVER =====
   useEffect(() => {
@@ -155,7 +174,7 @@ const Hero = ({ onMenuClick }) => {
           {/* BUTTON & RATING */}
           <div className="lux-action-group anim-element delay-4">
             <button className="btn-amber-glow" onClick={onMenuClick}>
-              <span>EXPLORER LE MENU</span>
+              <span>Voir le menu</span>
               <div className="btn-icon-circle">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -220,15 +239,16 @@ const Hero = ({ onMenuClick }) => {
             <div className="main-dish-card-3d">
               <div className="card-scanline"></div>
               <img 
-                src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=1000&auto=format&fit=crop" 
-                alt="Signature Curry Dish" 
+                src={doorImg} 
+                alt="Restaurant indoor seating and ambiance" 
                 className="dish-img"
+                decoding="async"
               />
               <div className="card-glass-overlay-3d">
                 <div className="dish-info">
-                  <span className="dish-tag">PLAT VEDETTE</span>
-                  <h3>Chicken Tikka Masala Supreme</h3>
-                  <p>Mijoté selon nos recettes ancestrales</p>
+                  <span className="dish-tag">ESPACES INTERNES</span>
+                  <h3>Ambiance chaleureuse du restaurant</h3>
+                  <p>Découvrez une atmosphère élégante idéale pour savourer votre repas.</p>
                 </div>
               </div>
               <div className="hud-corner hud-tl"></div>
@@ -245,8 +265,8 @@ const Hero = ({ onMenuClick }) => {
               }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=600&auto=format&fit=crop" 
-                alt="Special Naan Grill" 
+                src={kababImg} 
+                alt="Kabab special" 
               />
               <div className="accent-card-details">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#F5A623">
