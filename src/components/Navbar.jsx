@@ -30,8 +30,8 @@ const Navbar = ({ onMenuClick }) => {
 
     if (link === 'Menu') {
       onMenuClick('menu');
-    } else if (link === 'Menu Midi') {
-      onMenuClick('midi');
+    // } else if (link === 'Menu Midi') {
+    //   onMenuClick('midi');
     } else {
       const targetId = link.toLowerCase().replace(' ', '-');
       const section = document.getElementById(targetId);
@@ -43,7 +43,7 @@ const Navbar = ({ onMenuClick }) => {
     }
   };
 
-  const navItems = ['Home', 'Menu Midi', 'Menu', 'Contact'];
+  const navItems = ['Home', 'Menu', 'Contact'];
 
   return (
     <header className={`lux-navbar-wrapper ${isScrolled ? 'scrolled' : ''}`}>
