@@ -63,6 +63,7 @@ const MenuCard = ({ category, icon, onClick }) => {
               className="card-image"
               onError={() => setImageError(true)}
               loading="lazy"
+              decoding="async"
             />
           ) : (
             <div className="card-icon-fallback">

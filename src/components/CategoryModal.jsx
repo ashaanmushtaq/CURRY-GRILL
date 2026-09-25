@@ -18,6 +18,8 @@ const CategoryModal = ({ category, items, icon, onClose }) => {
                 alt={category}
                 className="category-modal-image"
                 onError={() => setImageError(true)}
+                loading="lazy"
+                decoding="async"
               />
             ) : (
               <div className="category-modal-icon-fallback">
