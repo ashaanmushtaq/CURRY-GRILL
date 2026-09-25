@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './MenuPage.css';
-
-// ===== LUNCH IMAGES =====
-import lunchBowlImg from '../assets/Lunch/large bowel.avif';
-import smallBowlImg from '../assets/Lunch/small bowel.avif';
-import naanSimpleImg from '../assets/Lunch/NF Curry.avif';
-import naanTenderImg from '../assets/Lunch/NF tender.avif';
-import naanSikhKebabImg from '../assets/Lunch/NF Sekh kabab.avif';
-import naanSteakImg from '../assets/Lunch/NF Fish.avif';
+import MenuMidi from './MenuMidi';
 
 // ===== FONT AWESOME IMPORTS =====
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -199,38 +192,6 @@ const fullMenuData = {
   ]
 };
 
-// ========== MENU MIDI DATA ==========
-const menuMidiData = [
-  {
-    title: 'SANDWICH',
-    subtitle: 'Frites + Boisson + Sauce incluse au choix',
-    items: [
-      { name: 'NAAN FROMAGE POULET TIKKA', price: '9,90 €', image: naanSimpleImg },
-      { name: 'NAAN FROMAGE POULET CURRY', price: '9,90 €', image: naanTenderImg },
-      { name: 'NAAN FROMAGE TENDER', price: '9,90 €', image: naanTenderImg },
-      { name: 'NAAN FROMAGE SEEKH KEBAB', price: '9,90 €', image: naanSikhKebabImg },
-      { name: 'NAAN FROMAGE FISH (STEAK POISSON)', price: '9,90 €', image: naanSteakImg }
-    ],
-    note: 'Sans Boisson Et Frites : 8,00 € Par Sandwich'
-  },
-  {
-    title: 'NOS BOWL',
-    items: [
-      { name: 'BOWL PLEIN', price: '8,90 €', image: lunchBowlImg },
-      { name: 'DEMI BOWL', price: '6,90 €', image: smallBowlImg }
-    ]
-  },
-  {
-    title: 'MENU MIDI BOWL AVEC BOISSON',
-    items: [
-      { name: 'BOWL RIZ BASMATI SAFRAN (POULET CURRY)' },
-      { name: 'BOWL RIZ BASMATI SAFRAN (POULET TIKKA MASALA)' },
-      { name: 'BOWL RIZ BASMATI SAFRAN (POULET SHAHI KORMA)' },
-      { name: 'BOWL RIZ BASMATI SAFRAN (BUTTER CHICKEN)' }
-    ]
-  }
-];
-
 const MenuPage = ({ onClose, view = 'menu' }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -280,59 +241,7 @@ const MenuPage = ({ onClose, view = 'menu' }) => {
         </h1>
 
         {isMidiView ? (
-          <div className="midi-view">
-            <div className="midi-header">
-              <p className="midi-subtitle">Frites + Boisson + Sauce incluse au choix</p>
-            </div>
-
-            <div className="midi-sections">
-              {menuMidiData.map((section, index) => {
-                const hasImages = section.items.some(item => item.image);
-                
-                return (
-                  <section key={index} className="midi-section-card">
-                    <h3 className="midi-section-title">{section.title}</h3>
-                    {section.subtitle && <p className="midi-section-subtitle">{section.subtitle}</p>}
-                    
-                    {hasImages ? (
-                      <div className="midi-items-grid-full">
-                        {section.items.map((item, itemIndex) => (
-                          <div key={`${section.title}-${itemIndex}`} className="midi-item-card-full">
-                            <div className="midi-item-image-wrapper">
-                              <img 
-                                src={item.image} 
-                                alt={item.name} 
-                                className="midi-item-image-full" 
-                                loading="lazy" 
-                              />
-                              <div className="midi-image-overlay"></div>
-                            </div>
-                            <div className="midi-item-details-full">
-                              <h4 className="midi-item-name-full">{item.name}</h4>
-                              <div className="midi-item-bottom">
-                                <span className="midi-item-price-full">{item.price}</span>
-                                <span className="midi-item-number">#{itemIndex + 1}</span>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="midi-items-list-center">
-                        {section.items.map((item, itemIndex) => (
-                          <div key={`${section.title}-${itemIndex}`} className="midi-item-center">
-                            <span className="midi-item-name-center">{item.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    
-                    {section.note && <p className="midi-note">{section.note}</p>}
-                  </section>
-                );
-              })}
-            </div>
-          </div>
+          <MenuMidi />
         ) : !isFlipped ? (
           <div className="menu-vertical-list">
             {allCategories.map((category, index) => (

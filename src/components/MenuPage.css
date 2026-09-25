@@ -339,19 +339,28 @@
 
 .midi-section-card {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(224, 124, 60, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   border-radius: 20px;
   padding: 24px 20px 20px;
   backdrop-filter: blur(16px);
 }
 
 .midi-section-title {
-  color: #f5b883;
+  color: #d4af37;
   margin: 0 0 4px;
   font-size: 1.3rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-align: center;
+}
+
+.midi-section-title::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
 }
 
 .midi-section-subtitle {
@@ -496,6 +505,26 @@
   display: block;
   text-align: center;
   letter-spacing: 0.5px;
+}
+
+.midi-item-description-center {
+  display: block;
+  color: #a39082;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 8px auto 0;
+  max-width: 720px;
+  text-align: center;
+}
+
+.midi-item-price-center {
+  display: inline-block;
+  color: #d4af37;
+  font-weight: 700;
+  margin-top: 10px;
+  padding: 3px 14px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 20px;
 }
 
 .midi-item-name-center::before {

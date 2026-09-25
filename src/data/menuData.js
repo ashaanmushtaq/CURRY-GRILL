@@ -124,6 +124,33 @@ export const fullMenuData = {
   ]
 };
 
+// ========== MENU MIDI DATA ==========
+export const menuMidiData = {
+  "Formules du Midi": [
+    { name: "FORMULE DÉJEUNER 1", desc: "1 plat du jour, riz, cheese naan, 1 boisson soft au choix", price: "14,90 €" },
+    { name: "FORMULE 2", desc: "2 entrées (1 poulet, 1 végé), 2 plats (1 plat du jour, 1 végé), 1 boisson au choix, 1 dessert maison", price: "16,90 €" }
+  ],
+  "Softs": {
+    price: "4,00 €",
+    items: ["Cola / Zero / Cherry", "Fanta Orange", "Oasis", "Orangina", "Fuzetea", "Sprite", "Schweppes", "Agrume", "Perrier"],
+    note: "Jus : Multi-fruit, Pomme, Mangue, Ananas, Banane, Fraise",
+    extras: [
+      { name: "Eau", sizes: [{ label: "50cl", price: "4,50 €" }, { label: "1L", price: "6,00 €" }] },
+      { name: "San Pellegrino", sizes: [{ label: "50cl", price: "4,50 €" }, { label: "1L", price: "6,00 €" }] }
+    ]
+  },
+  "Mojito": {
+    price: "7,00 €",
+    items: ["Virgin", "Fruit de la Passion", "Fraise", "Mangue"]
+  },
+  "Mocktails": [
+    { name: "Banana Street", desc: "Sirop de citron, sirop de passion, jus de banane, jus d'ananas, chantilly" },
+    { name: "Indiana Cream", desc: "Sirop de grenadine, jus de fraise, jus multifruit, chantilly, limonade" },
+    { name: "Margarita Fraise", desc: "Sirop de fraise, jus de pomme, jus de fraise, limonade" },
+    { name: "Tchitchi Mango", desc: "Sirop de kiwi, jus de mangue, Champomy" }
+  ]
+};
+
 // ========== ICON MAP ==========
 export const iconMap = {
   "Entrées Froides": "fa-solid fa-bowl-food",
