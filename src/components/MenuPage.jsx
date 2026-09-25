@@ -192,8 +192,8 @@ const fullMenuData = {
     { name: "SPECIAL LUNCH", desc: "Assiette spéciale avec tikka, riz et légumes", price: "13,50 €" }
   ]
 };
-
-const MenuPage = ({ onClose, view = 'menu' }) => {
+// ========== MENU MIDI DATA ==========
+  const MenuPage = ({ onClose, view = 'menu' }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);

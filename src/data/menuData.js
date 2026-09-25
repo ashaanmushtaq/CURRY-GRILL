@@ -124,7 +124,6 @@ export const fullMenuData = {
     { name: "MOUSSE À LA MANGUE", desc: "Pulpe de mangue indienne, coco, amandes, façon mousse", price: "6,00 €" }
   ]
 };
-
 // ========== MENU MIDI DATA ==========
 export const menuMidiData = {
   "Formules du Midi": [
